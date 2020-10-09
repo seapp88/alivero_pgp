@@ -1,7 +1,15 @@
 {
   "name": "alivero_pgp",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": true,
+  "author": {
+    "name": "Ited Company",
+    "email": "hello@ited.pro"
+  },
+  "description": "Alivero WMS Point get products",
+  "build": {
+    "appId ": "com.ited.aliverowms.pgp"
+  },
   "scripts": {
     "dev": "vue-cli-service electron:serve",
     "serve": "vue-cli-service serve",
