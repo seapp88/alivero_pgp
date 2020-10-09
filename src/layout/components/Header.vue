@@ -12,7 +12,7 @@
                 Настройки
             </div>
             <div class="btn-logout pointer" @click="exitApp">
-                Выйти из системы
+                Закрыть приложение
                 <i class="fa fa-sign-out-alt pl-2"></i>
             </div>
         </div>
