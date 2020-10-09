@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>WMS + A Mask</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="180" height="180" rx="23"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="WMS-+-A-Mask">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#3C44B1" xlink:href="#path-1"></use>
+            <path d="M81.1875,40 L44,139.53125 L65.1914062,139.53125 L72.2097656,118.61425 L108.672766,118.61425 L115.708984,139.53125 L136.900391,139.53125 L99.5761719,40 L86.0410156,40 L81.1875,40 Z M103.222766,102.41225 L77.6457656,102.41225 L90.4187656,64.34725 L103.222766,102.41225 Z" id="A" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>
