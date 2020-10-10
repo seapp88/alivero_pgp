@@ -17,8 +17,8 @@ import NumPad from './components/numpad'
 Vue.component('keyboard', Keyboard);
 Vue.component('num-pad', NumPad);
 
-const BASE_URL = 'http://10.10.10.10:3000';
-// const BASE_URL = 'https://alivero.jelastic.regruhosting.ru';
+// const BASE_URL = 'http://10.10.10.10:3000';
+const BASE_URL = 'https://alivero.jelastic.regruhosting.ru';
 
 import axios from 'axios'
 const instance = axios.create({
@@ -26,8 +26,31 @@ const instance = axios.create({
 });
 Vue.prototype.$http = instance;
 
-import hexSorter from 'hexsorter';
-Vue.prototype.$hexSorter = hexSorter;
+const sort = data => {
+    data = Object.assign([], data);
+    const sorted = [data.shift()];
+
+    while(data.length) {
+        const [a] = sorted, c = { d: Infinity };
+
+        for(let [i, b] of Object.entries(data)) {
+            const average = Math.floor((
+                Math.abs(a.r - b.r) +
+                Math.abs(a.g - b.g) +
+                Math.abs(a.b - b.b)
+            ) / 3);
+
+            if(average < c.d) {
+                Object.assign(c, { d: average, i: i });
+            }
+        }
+
+        sorted.unshift(data.splice(c.i, 1)[0]);
+    }
+
+    return sorted.reverse();
+};
+Vue.prototype.$hexSorter = sort;
 
 Vue.use(VueSweetalert2);
 

@@ -1,9 +1,11 @@
 'use strict'
 
-import {app, protocol, BrowserWindow, ipcMain} from 'electron'
+import {app, protocol, BrowserWindow, ipcMain, dialog, Menu} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
 import { autoUpdater } from "electron-updater"
+
+const os = require('os');
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -21,7 +23,7 @@ function createWindow() {
     win = new BrowserWindow({
         width: 1920,
         height: 1080,
-        frame: false,
+        frame: os.platform() !== 'LINUX',
         webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -37,7 +39,19 @@ function createWindow() {
         createProtocol('app');
         // Load the index.html when not in development
         win.loadURL('app://./index.html');
-        autoUpdater.checkForUpdatesAndNotify()
+        win.webContents.openDevTools()
+        setTimeout(() => {
+            autoUpdater.checkForUpdatesAndNotify().then((data) => {
+                win.webContents.send('update', data);
+            }).catch((e) => {
+                console.log(e)
+                dialog.showMessageBox({
+                    title: 'No Updates',
+                    message: e.message
+                })
+                win.webContents.send('update', e.message);
+            })
+        }, 5000)
     }
 
     win.on('closed', () => {
@@ -71,7 +85,6 @@ app.on('activate', () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
     if (isDevelopment && !process.env.IS_TEST) {
-        // Install Vue Devtools
         try {
             await installExtension(VUEJS_DEVTOOLS)
         } catch (e) {

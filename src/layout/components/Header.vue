@@ -12,7 +12,7 @@
                 Настройки
             </div>
             <div class="btn-logout pointer" @click="exitApp">
-                Закрыть приложение!
+                Закрыть приложение
                 <i class="fa fa-sign-out-alt pl-2"></i>
             </div>
         </div>
@@ -22,6 +22,11 @@
 <script>
     const { ipcRenderer } = require('electron');
     export default {
+        created(){
+            ipcRenderer.on('update', (event, arg) => {
+                console.log('UPDATE: ', arg)
+            })
+        },
         methods: {
             exitApp(){
                 ipcRenderer.send('app:quit')

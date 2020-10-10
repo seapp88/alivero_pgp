@@ -1,4 +1,4 @@
-import hexSorter from 'hexsorter';
+
 
 let icons = {
     'Автоаксессуары':           'flaticon-car',
@@ -41,18 +41,44 @@ let icons = {
 };
 
 const sortColor = (collections) => {
-    let colors = collections.map(i => i.hex);
 
-    let colorsSorted = hexSorter.sortColors(colors, 'mostBrightColor');
+    collections = Object.assign([], collections);
+    const sorted = [collections.shift()];
 
-    let output = colorsSorted.map(hex => {
-        let index = collections.findIndex(i => i.hex === hex);
-        if(index >= 0){
-            return collections[index]
-        }else{
-            console.log('Not found color ' , hex)
+    while(collections.length) {
+        const [a] = sorted, c = { d: Infinity };
+
+        for(let [i, b] of Object.entries(collections)) {
+            const average = Math.floor((
+                Math.abs(a.r - b.r) +
+                Math.abs(a.g - b.g) +
+                Math.abs(a.b - b.b)
+            ) / 3);
+
+            if(average < c.d) {
+                Object.assign(c, { d: average, i: i });
+            }
         }
-    });
+
+        sorted.unshift(collections.splice(c.i, 1)[0]);
+    }
+
+    console.log(sorted.reverse())
+
+    return sorted.reverse();
+
+    // let colors = collections.map(i => i.hex);
+    //
+    // let colorsSorted = hexSorter.sortColors(colors, 'mostBrightColor');
+    //
+    // let output = colorsSorted.map(hex => {
+    //     let index = collections.findIndex(i => i.hex === hex);
+    //     if(index >= 0){
+    //         return collections[index]
+    //     }else{
+    //         console.log('Not found color ' , hex)
+    //     }
+    // });
     return output;
 };
 
@@ -115,7 +141,11 @@ export default {
             state.categories = data.categories;
             state.products = data.products;
             state.colorsPopulate = data.colorsPopulate;
-            state.colors = sortColor(data.colors);
+            state.colors = sortColor(data.colors.reduce((m, e) => (m.push(Object.assign(e, {
+                r: parseInt(e.hex.substring(1, 3), 16) || 0,
+                g: parseInt(e.hex.substring(3, 5), 16) || 0,
+                b: parseInt(e.hex.substring(5, 7), 16) || 0
+            })), m), []));
             state.categorySize = data.categorySize;
             state.sizes = data.sizes;
             state.tags = data.tags;
