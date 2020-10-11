@@ -5,7 +5,13 @@ module.exports = {
             builderOptions: {
                 publish: ['github'],
                 appId: "com.ited.aliverowms.pgp",
-                productName: "Alivero WMS PGP"
+                productName: "Alivero WMS PGP",
+                mac: {
+                    artifactName: '${productName}.${ext}'
+                },
+                linux: {
+                    artifactName: '${productName}.${ext}'
+                }
             }
         }
     }
