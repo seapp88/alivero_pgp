@@ -53,7 +53,7 @@
                         <div class="page-title">
                             Результаты поиска
                         </div>
-                        <div class="search-hint">По вашему запросу найдено товаров: {{ $store.state.dataset.recentProducts.length }}</div>
+                        <div class="search-hint">По вашему запросу найдено товаров: {{ searchList.length }}</div>
 
                     </div>
 
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <!--Пустой экран-->
-                <div class="empty-screen" v-if="!$store.state.dataset.recentProducts.length">
+                <div class="empty-screen" v-if="!searchList.length">
                     <div class="empty-screen-message">
                         <div class="img">
                             <img src="@/assets/img/alivero-img/undraw_web_search_eetr.svg" alt="">
@@ -82,7 +82,7 @@
                 </div>
                 <!--Список товаров-->
                 <div class="product-grid" v-else>
-                    <product-card v-for="i in $store.state.dataset.recentProducts"
+                    <product-card v-for="i in searchList"
                                   :brand="i.brand.name"
                                   :title="i.name"
                                   :model="i.model"
@@ -109,15 +109,17 @@
         data() {
             return {
                 showSearch: false,
-                searchText: ''
+                searchText: '',
+                searchList: []
             }
         },
         watch: {
             searchText(val){
                 if(val !== ''){
-                    this.searchDocuments();
+                    this.searchList = this.$store.getters['dataset/searchProduct'](val)
+                    console.log(this.searchList)
                 }else{
-                    // this.$store.dispatch('product/setSearchList', [])
+                    this.searchList = [];
                 }
             }
         },

@@ -4,17 +4,17 @@
             <div class="page-title flex-grow-1">
                 {{ $store.getters['dataset/specificationById']($route.params.spec_id).name }}
             </div>
-            <div class="page-search">
-                <div class="form-group mb-0">
-                    <div class="input-group input-group-lg input-group-seamless">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input class="form-control" placeholder="Поиск по странице" type="text">
-                    </div>
-                </div>
+<!--            <div class="page-search">-->
+<!--                <div class="form-group mb-0">-->
+<!--                    <div class="input-group input-group-lg input-group-seamless">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                            <span class="input-group-text"><i class="fas fa-search"></i></span>-->
+<!--                        </div>-->
+<!--                        <input class="form-control" placeholder="Поиск по странице" type="text">-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
+<!--            </div>-->
         </div>
 
         <div class="card overflow-hidden">

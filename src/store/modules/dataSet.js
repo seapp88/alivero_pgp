@@ -1,4 +1,4 @@
-
+import MiniSearch from 'minisearch'
 
 let icons = {
     'Автоаксессуары':           'flaticon-car',
@@ -40,6 +40,11 @@ let icons = {
     'Электротранспорт':         'flaticon-kick-scooter',
 };
 
+let miniSearch = new MiniSearch({
+    fields: ['name', 'model'], // fields to index for full-text search
+    storeFields: ['id', 'name', 'model', 'brand']
+});
+
 const sortColor = (collections) => {
 
     collections = Object.assign([], collections);
@@ -66,20 +71,6 @@ const sortColor = (collections) => {
     console.log(sorted.reverse())
 
     return sorted.reverse();
-
-    // let colors = collections.map(i => i.hex);
-    //
-    // let colorsSorted = hexSorter.sortColors(colors, 'mostBrightColor');
-    //
-    // let output = colorsSorted.map(hex => {
-    //     let index = collections.findIndex(i => i.hex === hex);
-    //     if(index >= 0){
-    //         return collections[index]
-    //     }else{
-    //         console.log('Not found color ' , hex)
-    //     }
-    // });
-    return output;
 };
 
 export default {
@@ -134,6 +125,9 @@ export default {
             let index = state.tags.findIndex(i => i.id === id);
             return state.tags[index];
         },
+        searchProduct: state => query => {
+            return miniSearch.search(query, { prefix: true })
+        },
     },
     mutations: {
         setState(state, data){
@@ -164,7 +158,10 @@ export default {
                     }
                     return i
                 });
-                commit('setState', data)
+                commit('setState', data);
+
+                miniSearch.addAll(data.products);
+
                 return Promise.resolve()
             }catch (e) {
                 this.$app.$swal.fire({
