@@ -41,6 +41,11 @@
         flex-direction: row;
         height: 100%;
         min-height: 180px;
+        border-radius: 6px;
+
+        &:active {
+            box-shadow: none!important;
+        }
 
 
     }

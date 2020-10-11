@@ -39,6 +39,10 @@ const routes = [
                 component: require('../pages/get_products_process/Layout').default,
                 children: [
                     {
+                        path: '',
+                        component: require('../pages/get_products_process/Index').default,
+                    },
+                    {
                         path: 'color',
                         component: require('../pages/get_products_process/Color').default,
                     },

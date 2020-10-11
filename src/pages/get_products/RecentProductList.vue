@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="p-4">
-
+        <div class="p-3 d-flex flex-column">
             <div class="search-card card p-4 bg-primary text-white">
                 <div class="page-title mb-1 text-white">Поиск товара по названию или модели</div>
                 <div class="search-hint mb-3">Введите в поле название или модель товара, который необходимо принять</div>
@@ -49,12 +48,12 @@
             <!--Результаты поиска-->
 
             <div class="search-result px-3" v-else>
-                <div class="result-title mb-3">
+                <div class="result-title mb-3 pb-3">
                     <div class="div">
                         <div class="page-title">
                             Результаты поиска
                         </div>
-                        <div class="search-hint mb-2">По вашему запросу найдено товаров: {{ $store.state.dataset.recentProducts.length }}</div>
+                        <div class="search-hint">По вашему запросу найдено товаров: {{ $store.state.dataset.recentProducts.length }}</div>
 
                     </div>
 
@@ -142,7 +141,7 @@
     }
 
     .search-card {
-        margin-bottom: 34px;
+        margin-bottom: 26px;
         .search-card-input {
             font-size: 20px;
             font-weight: 600;
@@ -167,14 +166,13 @@
         .result-title {
             display: flex;
             border-bottom: 2px solid #3c44b1;
-            padding-bottom: 4px;
             align-items: center;
             justify-content: space-between;
 
             .search-hint {
                 font-weight: bold;
                 font-size: 20px;
-                line-height: 1.5;
+                line-height: 1.3;
             }
 
             .page-title {
@@ -182,7 +180,7 @@
             }
 
             .btn-clear-search {
-                padding: 15px;
+                padding: 15px 24px;
                 background-color: rgba(48, 54, 89, 0.51);
                 border-radius: 100px;
                 color: white;
@@ -195,7 +193,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: calc(100vh - 483px);
+        height: calc(100vh - 450px);
 
         .empty-screen-message {
             border-radius: 6px;
@@ -225,7 +223,7 @@
     }
 
     .search-result .empty-screen {
-        height: calc(100vh - 521px);
+        height: calc(100vh - 488px);
 
     }
 

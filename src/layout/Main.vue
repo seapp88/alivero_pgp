@@ -1,8 +1,10 @@
 <template>
     <div class="main-layout">
         <app-header></app-header>
-        <div class="app-content">
-            <router-view></router-view>
+        <div class="app-content px-3 pt-3 pb-2">
+            <div class="app-content-wrapper card card-box overflow-hidden">
+                <router-view></router-view>
+            </div>
         </div>
         <app-footer></app-footer>
     </div>
@@ -31,6 +33,12 @@
     .app-content {
         overflow-y: hidden;
         flex: 1;
+        background-color: #070919;
+    }
+
+    .app-content-wrapper {
+        background-color: #e7e9f5;
+        height: 100%;
     }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4">
+    <div class="p-4 d-flex flex-column">
         <div class="d-flex mb-3 align-items-center">
             <div class="btn-back mr-2 pointer " @click="$router.go(-1)">
                 <i class="fa fa-arrow-left"></i>
@@ -25,6 +25,7 @@
                 <div class="product-grid">
                     <product-card v-for="(item, index) in $store.getters['dataset/products']($route.params.category_id)" :key="index" :id="item.id" :title="item.name" :brand="item.brand.name" :model="item.model"/>
                 </div>
+
             </div>
         </div>
 
@@ -48,15 +49,17 @@
 <style scoped lang="scss">
     .btn-back {
         color: #8989a8;
-        font-size: 32px;
-        line-height: 52px;
-        line-height: 1;
         padding: 0 14px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         border-radius: 6px;
+
+        i {
+            font-size: 32px;
+            line-height: 52px;
+        }
 
         &:active {
             color: #3c44b1;
@@ -65,6 +68,11 @@
 
     .page-search {
         width: 300px;
+    }
+
+    .grid-wrapper {
+        overflow-y: auto;
+        height: calc(100vh - 231px);
     }
 
 </style>

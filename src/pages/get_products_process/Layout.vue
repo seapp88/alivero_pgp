@@ -1,16 +1,15 @@
 <template>
-    <div class="d-flex flex-row">
+    <div class="page-container">
         <menu-bar></menu-bar>
 
         <div class="content-wrapper">
             <router-view :key="$route.fullPath"></router-view>
         </div>
 
-
         <div class="process-product p-3">
             <div class="process-product-card" v-if="product">
 
-                <div class="product-card-header d-flex align-items-center justify-content-between p-3">
+                <div class="product-card-header d-flex align-items-center justify-content-between pl-3 pr-2 py-2">
                     <div class="product-brand flex-grow-1">{{ product.brand.name }}</div>
                     <div class="product-model">Модель: {{ product.model }}</div>
                 </div>
@@ -36,7 +35,7 @@
                         }}
                     </div>
                     <div class="product-tags d-flex align-items-center justify-content-center" v-if="!$store.state.selectedData.tags.length">
-                        <div class="tag flex-grow-1 bg-white">Теги не выбраны</div>
+                        <div class="tag tag-none flex-grow-1 bg-neutral-second text-dark">Теги не выбраны</div>
                     </div>
                     <div class="product-tags d-flex align-items-center justify-content-center" v-else>
                         <div class="tag flex-grow-1">{{ $store.getters['dataset/tagById']($store.state.selectedData.tags[0]).name }}</div>
@@ -88,10 +87,14 @@
 <style scoped lang="scss">
     .content-wrapper {
         flex: 1;
+
     }
 
     .process-product {
+        flex: 1;
         width: 464px;
+        min-width: 464px;
+        max-width: 464px;
         background-color: #303659;
         justify-content: space-between;
     }
@@ -136,6 +139,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        flex: 1;
 
         .product-img {
             background: #ccc;
@@ -143,9 +147,9 @@
             max-width: 150px;
             width: 150px;
             min-width: 150px;
-            height: 160px;
-            min-height: 160px;
-            max-height: 160px;
+            height: 150px;
+            min-height: 150px;
+            max-height: 150px;
             border-radius: 12px;
             margin-bottom: 16px;
 
@@ -167,8 +171,8 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            height: 52px;
-            margin-bottom: 8px;
+            max-height: 52px;
+            margin-bottom: 16px;
         }
 
         .product-color {
@@ -184,7 +188,7 @@
                 min-height: 28px;
                 border: solid 1px #edeef7;
                 border-radius: 14px;
-                margin: 0 4px;
+                margin: 6px 4px;
             }
         }
 
@@ -215,6 +219,9 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 margin-right: 8px;
+                &.tag-none {
+                    border-color: transparent;
+                }
             }
 
             .tag-count {
@@ -288,6 +295,8 @@
         color: #ffffff;
         cursor: pointer;
         flex-grow: 1;
+        max-height: 90px;
+        min-height: 70px;
 
 
         .label {

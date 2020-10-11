@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-keyboard">
+    <div class="ui-keyboard p-3">
         <div class="simple-keyboard keyboard-main"></div>
         <div class="simple-keyboard keyboard-num"></div>
         <div class="simple-keyboard keyboard-actions"></div>
@@ -182,11 +182,11 @@
 <style  lang="scss">
     .ui-keyboard {
         position: fixed;
-        width: calc(100% - 180px);
-        bottom: 38px;
+        width: calc(100% - 214px);
+        bottom: 36px;
         background-color: #070919;
-        padding: 24px;
         display: flex;
+        border-bottom-right-radius: 0.65rem;
     }
 
     .keyboard-actions {

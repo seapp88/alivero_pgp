@@ -29,7 +29,8 @@
         font-weight: 600;
         font-size: 20px;
         line-height: 1.3;
-        color: #3c44b1;
+        color: #ffffff;
+        background-color: #3c44b1;
 
 
         &:active {
