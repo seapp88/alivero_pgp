@@ -26,23 +26,26 @@
         cursor: pointer;
     }
 
+    .page-container {
+        display: flex;
+        flex-direction: row;
+        height: calc(100vh - 115px);
+
+    }
+
     .page-title {
-        font-size: 30px;
+        font-size: 32px;
         color: #070919;
         font-weight: 600;
         line-height: 52px;
     }
 
-    .grid-wrapper {
-        overflow-y: auto;
-        height: calc(100vh - 240px);
-    }
 
     .product-grid {
         display: grid;
         grid-template-columns: repeat(4,1fr);
         grid-auto-rows: 1fr;
-        grid-gap: 15px;
+        grid-gap: 24px;
         padding: 20px;
     }
 

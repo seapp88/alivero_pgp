@@ -1,6 +1,7 @@
 <template>
 
-    <div class="p-4">
+    <div class="p-4 d-flex flex-column">
+
         <div class="step-title mb-3">Вы можете выбрать до 6 цветов для этого товара</div>
         <div class="colors-switch d-flex">
             <div class="switch-button" :class="{active: !isAllColorTab}" @click="isAllColorTab = false">
@@ -10,11 +11,12 @@
                 Все цвета
             </div>
         </div>
-
         <div class="card-chooser card">
             <div v-if="isAllColorTab" class="scroll-container p-4">
                 <div class="color-grid">
-                    <div class="color-item" v-for="color in $store.state.dataset.colors" :class="{active: $store.getters['selectedData/isColorActive'](color.id)}" @click="$store.dispatch('selectedData/setColor', color.id)">
+                    <div class="color-item" v-for="color in $store.state.dataset.colors"
+                         :class="{active: $store.getters['selectedData/isColorActive'](color.id)}"
+                         @click="$store.dispatch('selectedData/setColor', color.id)">
                         <div class="color-prew" :style="'background-color: ' + color.hex"></div>
                         <div class="color-title px-2 flex-grow-1">{{ color.name }}</div>
                         <div class="color-check px-3">
@@ -25,43 +27,47 @@
             </div>
 
             <div v-else class="scroll-container p-4">
-                <div class="color-palette-title">Готовые палитры для этой модели</div>
+                <!--                <div class="color-palette-title">Готовые палитры для этой модели</div>
 
-                <div class="d-flex position-relative px-4 mb-4">
-                    <div class="palette-nav-btn left">
-                        <i class="fa fa-angle-left"></i>
-                    </div>
+                                <div class="d-flex position-relative px-4 mb-4">
+                                    <div class="palette-nav-btn left">
+                                        <i class="fa fa-angle-left"></i>
+                                    </div>
 
-                    <div class="palette-grid">
-                        <div class="p-2 d-flex">
-                            <div class="palette-card card px-3 py-2 active">
-                                <div class="color-item" v-for="i in 5">
-                                    <div class="color-marker" style="background-color: #ffffff"></div>
-                                    <div class="color-title">перламутровый ночной сини</div>
-                                </div>
+                                    <div class="palette-grid">
+                                        <div class="p-2 d-flex">
+                                            <div class="palette-card card px-3 py-2 active">
+                                                <div class="color-item" v-for="i in 5">
+                                                    <div class="color-marker" style="background-color: #ffffff"></div>
+                                                    <div class="color-title">перламутровый ночной сини</div>
+                                                </div>
 
-                            </div>
-                            <div class="palette-card card px-4 py-2" v-for="i in 6">
-                                <div class="color-item" v-for="i in 4">
-                                    <div class="color-marker" style="background-color: #8c0615"></div>
-                                    <div class="color-title">перламутровый ночной сини</div>
-                                </div>
+                                            </div>
+                                            <div class="palette-card card px-4 py-2" v-for="i in 6">
+                                                <div class="color-item" v-for="i in 4">
+                                                    <div class="color-marker" style="background-color: #8c0615"></div>
+                                                    <div class="color-title">перламутровый ночной сини</div>
+                                                </div>
 
-                            </div>
-                        </div>
+                                            </div>
+                                        </div>
 
 
-                    </div>
-                    <div class="palette-nav-btn right">
-                        <i class="fa fa-angle-right"></i>
-                    </div>
-                </div>
+                                    </div>
+                                    <div class="palette-nav-btn right">
+                                        <i class="fa fa-angle-right"></i>
+                                    </div>
+                                </div>-->
 
+<!--
                 <div class="color-palette-title">Часто используемые цвета</div>
+-->
 
                 <div class="color-grid">
 
-                    <div class="color-item" v-for="color in $store.state.dataset.colors" :class="{active: $store.getters['selectedData/isColorActive'](color.id)}" @click="$store.dispatch('selectedData/setColor', color.id)">
+                    <div class="color-item" v-for="color in $store.state.dataset.colors"
+                         :class="{active: $store.getters['selectedData/isColorActive'](color.id)}"
+                         @click="$store.dispatch('selectedData/setColor', color.id)">
                         <div class="color-prew" :style="'background-color: ' + color.hex"></div>
                         <div class="color-title px-2 flex-grow-1">{{ color.name }}</div>
                         <div class="color-check px-3">
@@ -76,15 +82,16 @@
         </div>
 
 
-    </div>
 
+
+    </div>
 
 
 </template>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
                 isAllColorTab: false
             }
@@ -94,21 +101,22 @@
 
 <style scoped lang="scss">
 
+
+
+
     .card-chooser {
         display: flex;
         flex-direction: row;
         overflow: hidden;
         border-top-left-radius: 0 !important;
-        border-top-right-radius: 0 !important;
     }
 
     .scroll-container {
         width: 20px;
         flex: 1;
         overflow-y: auto;
-        height: calc(100vh - 279px);
+        max-height: calc(100vh - 270px);
     }
-
 
 
     .switch-button {
@@ -184,9 +192,9 @@
         }
     }
 
-        .palette-grid::-webkit-scrollbar {
-            display: none;
-        }
+    .palette-grid::-webkit-scrollbar {
+        display: none;
+    }
 
     .palette-nav-btn {
         padding: 0 24px 0 20px;
@@ -282,9 +290,6 @@
 
 
     }
-
-
-
 
 
 </style>

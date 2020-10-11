@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <div class="d-flex flex-row">
-            <menu-bar></menu-bar>
+    <div class="page-container">
+        <menu-bar></menu-bar>
 
-            <div class="content-wrapper">
-                <router-view :key="$route.fullPath"></router-view>
-            </div>
+        <div class="content-wrapper">
+            <router-view :key="$route.fullPath"></router-view>
         </div>
+
     </div>
+
 </template>
 
 <script>
@@ -21,11 +21,13 @@
 </script>
 
 <style scoped>
+
+
+
     .content-wrapper {
         overflow-y: auto;
         flex: 1;
-        height: calc(100vh - 124px);
-
+        height: calc(100vh - 115px);
     }
 
 </style>

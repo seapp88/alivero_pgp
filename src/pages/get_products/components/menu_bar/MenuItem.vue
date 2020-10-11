@@ -39,7 +39,7 @@
         border-radius: 12px;
         padding: 10px;
         text-align: center;
-        margin: 8px 0;
+        margin: 0 0 8px 0;
 
         &:active {
             background-color: #353f64;

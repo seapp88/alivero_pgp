@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="to" class="menu-item success" :exact="to === '/get-products'">
+    <router-link :to="to" class="menu-item" :exact="to === '/get-products'">
         <div class="menu-item-icon">
             <i :class="icon"></i>
         </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="menu-wrapper">
-        <menu-item title="Главная" icon="flaticon-home" to="/get-products"/>
+        <menu-item title="Главная" icon="flaticon-home" to="/get-products" class="menu-item-main"/>
 
         <div class="menu-swiper">
             <div class="menu-nav-btn"
@@ -79,22 +79,20 @@
 </script>
 
 <style scoped lang="scss">
-    .menu-scroll {
-
-    }
-
-    .menu-container::-webkit-scrollbar {
-        display: none;
-    }
-
     .menu-wrapper {
-        background-color: #303659;
-        width: 180px;
-        overflow-y: hidden;
         display: flex;
         flex-direction: column;
+        background-color: #303659;
+        width: 180px;
+        min-width: 180px;
+        max-width: 180px;
+        overflow-y: hidden;
         align-items: center;
         padding: 10px;
+    }
+
+    .menu-item-main {
+        width: 96%;
     }
 
     .menu-swiper {
@@ -106,13 +104,16 @@
         align-items: center;
         justify-content: space-between;
         overflow: hidden;
-        height: calc(100vh - 295px);
-
+        height: calc(100vh - 279px);
     }
 
     .menu-container {
         overflow-y: auto;
-        flex: 1;
+        /*flex: 1;*/
+    }
+
+    .menu-container::-webkit-scrollbar {
+        display: none;
     }
 
     .menu-nav-btn {

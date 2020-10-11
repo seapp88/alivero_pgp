@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4">
+    <div class="p-4 d-flex flex-column">
         <div class="d-flex mb-3 align-items-center">
             <div class="page-title flex-grow-1">
                 {{ $store.getters['dataset/specificationById']($route.params.spec_id).name }}
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="card overflow-hidden shadow-none border-0">
+        <div class="card overflow-hidden">
             <div class="grid-wrapper">
                 <div class="category-grid">
                     <category-card v-for="(item, index) in $store.getters['dataset/categories']($route.params.spec_id)" :key="index" :title="item.name" :id="item.id" />
@@ -48,6 +48,15 @@
         grid-auto-rows: 1fr;
         grid-gap: 15px;
         padding: 20px;
+    }
+
+    .page-search {
+        width: 300px;
+    }
+
+    .grid-wrapper {
+        overflow-y: auto;
+        height: calc(100vh - 231px);
     }
 
 
