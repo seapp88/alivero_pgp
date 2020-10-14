@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 const routes = [
+    { path: '/', redirect: '/get-products' },
     {
         path: '/',
         component: require('../layout/Main').default,
@@ -11,6 +12,10 @@ const routes = [
             {
                 path: '',
                 component: require('../pages/Home').default,
+            },
+            {
+                path: '/settings',
+                component: require('../pages/Settings').default,
             },
             {
                 path: '/get-products',

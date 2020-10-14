@@ -67,17 +67,14 @@ const sortColor = (collections) => {
 
         sorted.unshift(collections.splice(c.i, 1)[0]);
     }
-
-    console.log(sorted.reverse())
-
-    return sorted.reverse();
+    return sorted;
 };
 
 export default {
     namespaced: true,
     state: {
         recentProducts: [],
-        specifications: [],
+        templates: [],
         categories: [],
         products: [],
         colorsPopulate: [],
@@ -87,42 +84,42 @@ export default {
         tags: []
     },
     getters: {
-        specificationById: state => specification_id => {
-            let index = state.specifications.findIndex(i => i.id === specification_id);
-            return state.specifications[index]
+        templateById: state => template_id => {
+            let index = state.templates.findIndex(i => i.id === +template_id);
+            return state.templates[index]
         },
-        categories: state => specification_id => {
-            return state.categories.filter(i => i.specification_id === specification_id);
+        categories: state => template_id => {
+            return state.categories.filter(i => i.template_id === +template_id);
         },
         categoryById: state => category_id => {
-            let index = state.categories.findIndex(i => i.id === category_id);
+            let index = state.categories.findIndex(i => i.id === +category_id);
             return state.categories[index]
         },
         products: state => category_id => {
-            return state.products.filter(i => i.category_id === category_id);
+            return state.products.filter(i => i.category_id === +category_id);
         },
         product: state => id => {
-            return state.products.filter(i => i.id === id)[0];
+            return state.products.filter(i => i.id === +id)[0];
         },
         sizes: state => category_id => {
             if(category_id){
-                return state.sizes.filter(i => i.category_id === category_id);
+                return state.sizes.filter(i => i.category_id === +category_id);
             }else{
                 return []
             }
         },
         colorById: state => id => {
-            let index = state.colors.findIndex(i => i.id === id);
+            let index = state.colors.findIndex(i => i.id === +id);
             return state.colors[index];
         },
         sizeById: state => id => {
-            let index = state.sizes.findIndex(i => i.id === id);
+            let index = state.sizes.findIndex(i => i.id === +id);
             let size = state.sizes[index];
             size.text = `${size.name} (RU ${size.ru})`
             return size;
         },
         tagById: state => id => {
-            let index = state.tags.findIndex(i => i.id === id);
+            let index = state.tags.findIndex(i => i.id === +id);
             return state.tags[index];
         },
         searchProduct: state => query => {
@@ -131,7 +128,7 @@ export default {
     },
     mutations: {
         setState(state, data){
-            state.specifications = data.specifications;
+            state.templates = data.templates;
             state.categories = data.categories;
             state.products = data.products;
             state.colorsPopulate = data.colorsPopulate;
@@ -148,9 +145,9 @@ export default {
     actions: {
         async setState({commit}){
             try{
-                let { data } = await this.$app.$http.get('/tablet ');
+                let { data } = await this.$app.$http.get('/sync');
 
-                data.specifications = data.specifications.map(i => {
+                data.templates = data.templates.map(i => {
                     if(icons[i.name]){
                         i.icon = icons[i.name]
                     }else{
@@ -158,6 +155,7 @@ export default {
                     }
                     return i
                 });
+
                 commit('setState', data);
 
                 miniSearch.addAll(data.products);

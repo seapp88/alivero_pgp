@@ -13,7 +13,7 @@
 
             <div class="menu-container" ref="menu">
 
-                <menu-item class="swiper-slide" v-for="(item, index) in $store.state.dataset.specifications" :key="index" :title="item.name" :icon="item.icon" :to="'/get-products/' + item.id" />
+                <menu-item class="swiper-slide" v-for="(item, index) in $store.state.dataset.templates" :key="index" :title="item.name" :icon="item.icon" :to="'/get-products/' + item.id" />
 
             </div>
 

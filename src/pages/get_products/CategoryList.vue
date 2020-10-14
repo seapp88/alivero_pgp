@@ -2,7 +2,7 @@
     <div class="p-4 d-flex flex-column">
         <div class="d-flex mb-3 align-items-center">
             <div class="page-title flex-grow-1">
-                {{ $store.getters['dataset/specificationById']($route.params.spec_id).name }}
+                {{ $store.getters['dataset/templateById']($route.params.spec_id).name }}
             </div>
 <!--            <div class="page-search">-->
 <!--                <div class="form-group mb-0">-->

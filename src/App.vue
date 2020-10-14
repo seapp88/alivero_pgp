@@ -6,8 +6,8 @@
     export default {
         async created() {
             try{
-                let { data } = await this.$http.get('/tablet');
-                console.log(data)
+                // let { data } = await this.$http.get('/tablet');
+                // console.log(data)
             }catch (e) {
                 console.log(e)
             }

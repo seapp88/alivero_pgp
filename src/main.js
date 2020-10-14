@@ -17,12 +17,12 @@ import NumPad from './components/numpad'
 Vue.component('keyboard', Keyboard);
 Vue.component('num-pad', NumPad);
 
-// const BASE_URL = 'http://10.10.10.10:3000';
-const BASE_URL = 'https://alivero.jelastic.regruhosting.ru';
+const BASE_URL = 'http://10.10.10.10:3000';
+// const BASE_URL = 'https://alivero.jelastic.regruhosting.ru';
 
 import axios from 'axios'
 const instance = axios.create({
-    baseURL: BASE_URL + '/api/v1/tsd'
+    baseURL: BASE_URL + '/api/v1/pgp'
 });
 Vue.prototype.$http = instance;
 
@@ -54,13 +54,13 @@ Vue.prototype.$hexSorter = sort;
 
 Vue.use(VueSweetalert2);
 
-const socket = require('socket.io-client')(BASE_URL);
-socket.on('connect', () => {
-    store.dispatch('setStateConnect', true)
-});
-socket.on('disconnect', () => {
-    store.dispatch('setStateConnect', false)
-});
+// const socket = require('socket.io-client')(BASE_URL);
+// socket.on('connect', () => {
+//     store.dispatch('setStateConnect', true)
+// });
+// socket.on('disconnect', () => {
+//     store.dispatch('setStateConnect', false)
+// });
 
 Vue.config.productionTip = false;
 

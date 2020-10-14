@@ -2,7 +2,7 @@
     <router-link :to="'/get-products-process/' + id">
         <div class="product-card card card-box overflow-hidden">
             <div class="product-img"
-                 style="background-image: url('https://img1.wbstatic.net/big/new/15000000/15009483-2.jpg')"></div>
+                 :style="{'background-image': 'url(' + require('@/assets/img/alivero-img/no_image.png') + ')'}"></div>
 
             <div class="product-info p-3">
                 <div class="title mt-1 mb-2">{{ title }}</div>
@@ -18,8 +18,8 @@
     export default {
         props: {
             id: {
-                type: String,
-                default: '4436192e-51d6-4e42-8733-ab8c9e8fc863'
+                type: Number,
+                default: 1
             },
             brand: {
                 type: String

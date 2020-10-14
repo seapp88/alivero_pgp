@@ -16,10 +16,10 @@
 
                 <div class="product-card-body p-3">
                     <div class="product-img">
-                        <img src="https://nutritionandfitness.net/wp-content/uploads/2018/05/no-image.jpg" alt="">
+                        <img src="@/assets/img/alivero-img/no_image.png" alt="">
                     </div>
                     <div class="product-title">{{ product.name }}</div>
-                    <div class="product-color">
+                    <div class="product-color" v-if="isColor">
                         <div v-if="!$store.state.selectedData.colors.length">
                             <div class="product-size mb-0 bg-danger">Цвета не выбраны!</div>
                         </div>
@@ -28,6 +28,7 @@
                         </div>
                     </div>
                     <div class="product-size"
+                         v-if="isSize"
                          :class="{'bg-danger': !$store.state.selectedData.size}">
                         {{ !$store.state.selectedData.size ?
                         'Размер не выбран!' :
@@ -52,7 +53,7 @@
 
                 </div>
                 <div class="product-card-footer">
-                    <div class="label">Принять товар</div>
+                    <div class="label" @click="acceptProduct">Принять товар</div>
                     <i class="fa fa-arrow-right pl-3"></i>
                 </div>
 
@@ -71,14 +72,65 @@
         components: {
             MenuBar
         },
-        created(){
-            this.$store.dispatch('selectedData/clearState');
-            this.product = this.$store.getters['dataset/product'](this.$route.params.product_id)
-        },
         data() {
             return {
                 count: 1,
                 product: null,
+                isColor: false,
+                isSize: false
+            }
+        },
+        created(){
+            this.$store.dispatch('selectedData/clearState');
+            this.product = this.$store.getters['dataset/product'](this.$route.params.product_id);
+
+            let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
+            this.isColor = !!category.is_select_color;
+            this.isSize = !!category.is_select_size;
+            this.category = category
+        },
+        methods: {
+            async acceptProduct(){
+                let data = {
+                    product_id: +this.$route.params.product_id,
+                    size_id: this.$store.state.selectedData.size,
+                    color_ids: this.$store.state.selectedData.colors,
+                    tag_ids: this.$store.state.selectedData.tags,
+                    count: +this.count
+                };
+
+                let valid = false;
+
+                if(this.isColor && !data.color_ids.length){
+                    alert('Выберите цвета')
+                }else {
+                    valid = true
+                }
+
+                if(this.isSize && !data.size_id){
+                    alert('Выберите размер')
+                    valid = false
+                }else {
+                    valid = true
+                }
+
+                if(data.count <= 0){
+                    alert('Введите количество')
+                    valid = false
+                }
+
+                if(valid){
+                    try{
+                        await this.$http.post('/accept', data);
+                        console.log(data)
+                    }catch (e) {
+                        console.log(e)
+                    }
+                }
+
+
+
+
             }
         }
     }
