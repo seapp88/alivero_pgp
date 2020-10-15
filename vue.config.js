@@ -3,6 +3,7 @@ module.exports = {
         electronBuilder: {
             nodeIntegration: true,
             builderOptions: {
+                externals: ['printer'],
                 publish: ['github'],
                 appId: "com.ited.aliverowms.pgp",
                 productName: "Alivero WMS PGP",

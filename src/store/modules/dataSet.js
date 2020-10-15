@@ -81,7 +81,9 @@ export default {
         colors: [],
         categorySize: [],
         sizes: [],
-        tags: []
+        tags: [],
+        stock_rack_cell_id: 1,
+        printer: null
     },
     getters: {
         templateById: state => template_id => {
@@ -140,6 +142,12 @@ export default {
             state.categorySize = data.categorySize;
             state.sizes = data.sizes;
             state.tags = data.tags;
+        },
+        setCell(state, data){
+            state.stock_rack_cell_id = data;
+        },
+        setPrinter(state, data){
+            state.printer = data;
         }
     },
     actions: {
@@ -169,6 +177,12 @@ export default {
                 });
                 return Promise.reject(e)
             }
+        },
+        setCell({commit}, data){
+            commit('setCell', data);
+        },
+        setPrinter({commit}, data){
+            commit('setPrinter', data);
         }
     }
 }

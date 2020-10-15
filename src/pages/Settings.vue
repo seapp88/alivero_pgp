@@ -109,7 +109,14 @@
 </template>
 
 <script>
-    export default {}
+
+
+    export default {
+        created(){
+            // let printers = printer.getPrinters();
+            // console.log(printers)
+        }
+    }
 </script>
 
 <style scoped lang="scss">

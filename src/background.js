@@ -18,6 +18,10 @@ protocol.registerSchemesAsPrivileged([
     {scheme: 'app', privileges: {secure: true, standard: true}}
 ]);
 
+const printer = require("printer");
+let printers = printer.getPrinters();
+console.log(printers)
+
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({

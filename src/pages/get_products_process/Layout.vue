@@ -52,8 +52,8 @@
 
 
                 </div>
-                <div class="product-card-footer">
-                    <div class="label" @click="acceptProduct">Принять товар</div>
+                <div class="product-card-footer" @click="acceptProduct">
+                    <div class="label">Принять товар</div>
                     <i class="fa fa-arrow-right pl-3"></i>
                 </div>
 
@@ -96,7 +96,8 @@
                     size_id: this.$store.state.selectedData.size,
                     color_ids: this.$store.state.selectedData.colors,
                     tag_ids: this.$store.state.selectedData.tags,
-                    count: +this.count
+                    count: +this.count,
+                    stock_rack_cell_id: this.$store.state.dataset.stock_rack_cell_id
                 };
 
                 let valid = false;
@@ -121,8 +122,8 @@
 
                 if(valid){
                     try{
-                        await this.$http.post('/accept', data);
-                        console.log(data)
+                        let res = await this.$http.post('/accept', data);
+                        console.log(res.data)
                     }catch (e) {
                         console.log(e)
                     }
