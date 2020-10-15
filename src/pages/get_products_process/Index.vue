@@ -3,10 +3,38 @@
         <div class="step-title mb-3">Ранее использованные конфигурации для выбранной модели</div>
         <div class="card overflow-hidden shadow-none border-0">
             <div class="card-chooser card">
-                <div class="scroll-container p-4">
+
+
+                <!--Пустой экран-->
+                <div class="empty-screen p-4 scroll-container">
+                    <div class="empty-screen">
+                        <div class="empty-screen-message mb-5">
+                            <div class="img">
+                                <img src="@/assets/img/alivero-img/accept_empty.svg" alt="">
+                            </div>
+                            <div class="title">
+                                Для выбранной модели нет готовых конфигураций
+                            </div>
+                            <div class="message">
+                                Вы еще не принимали выбранную модель
+                            </div>
+                        </div>
+                        <div class="actions d-flex flex-column">
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3">
+                                <i class="flaticon-paint-brush pr-3"></i>Выбрать цвета</button>
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3">
+                                <i class="flaticon-measuring-tape pr-3"></i>Выбрать размер</button>
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold ">
+                                <i class="flaticon-hastag pr-2"></i>Добавить теги</button>
+                        </div>
+                    </div>
+                </div>
+
+<!--                <div class="scroll-container p-4">
+
                     <div class="color-container">
                         <div class="palette-title">Палитры</div>
-                        <div class="d-flex position-relative px-4 mb-4">
+                        <div class="palette-box d-flex position-relative mb-4 ">
                             <div class="palette-nav-btn left">
                                 <i class="fa fa-angle-left"></i>
                             </div>
@@ -52,11 +80,7 @@
                         </div>
                     </div>
 
-
-
-
-
-                </div>
+                </div>-->
             </div>
 
         </div>
@@ -76,6 +100,51 @@
 </script>
 
 <style scoped lang="scss">
+    .empty-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 450px);
+
+        .actions {
+            .btn {
+                height: 72px;
+                [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+                [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+                    line-height: 1;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .empty-screen-message {
+            border-radius: 6px;
+            text-align: center;
+
+            .img {
+                height: 300px;
+                margin-bottom: 20px;
+
+                img {
+                    height: 100%;
+                }
+
+            }
+
+            .title {
+                font-weight: 600;
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .message {
+                font-size: 18px;
+            }
+        }
+    }
+
+
     .steps {
 
         display: grid;
@@ -145,8 +214,6 @@
 
     .palette-grid {
         background-color: #e7e9f5;
-        border-radius: 8px;
-        border: 2px solid #e7e9f5;
         min-width: 100%;
         display: flex;
         overflow-x: auto;
@@ -197,6 +264,10 @@
         }
     }
 
+    .palette-box {
+        padding: 0 40px;
+    }
+
     .palette-grid::-webkit-scrollbar {
         display: none;
     }
@@ -204,24 +275,29 @@
     .palette-nav-btn {
         padding: 0 24px 0 20px;
         display: flex;
+        height: 100%;
+        width: 40px;
         align-items: center;
         justify-content: center;
         color: #ffffff;
         background-color: #3c44b1;
-        border-radius: 50px;
         position: absolute;
         z-index: 2;
-        top: calc(50% - 21px);
+        top: 0;
 
         &.left {
             left: 0;
             padding: 0 16px 0 12px;
+            border-radius: 0.65em 0 0 0.65em;
+
 
         }
 
         &.right {
             right: 0;
             padding: 0 12px 0 16px;
+            border-radius: 0 0.65em 0.65em 0;
+
 
         }
 

@@ -6,7 +6,7 @@
             <router-view :key="$route.fullPath"></router-view>
         </div>
 
-        <div class="process-product p-3">
+        <div class="process-product pl-3">
             <div class="process-product-card" v-if="product">
 
                 <div class="product-card-header d-flex align-items-center justify-content-between pl-3 pr-2 py-2">
@@ -137,8 +137,16 @@
 </script>
 
 <style scoped lang="scss">
+    .page-container {
+        background-color: #070919;
+
+    }
+
     .content-wrapper {
         flex: 1;
+        background-color: #e7e9f5;
+        border-top-right-radius: 0.65em;
+        border-bottom-right-radius: 0.65em;
 
     }
 
@@ -147,7 +155,7 @@
         width: 464px;
         min-width: 464px;
         max-width: 464px;
-        background-color: #303659;
+        background-color: #070919;
         justify-content: space-between;
     }
 
@@ -155,7 +163,7 @@
         display: flex;
         flex-direction: column;
         background-color: #ffffff;
-        border-radius: 12px;
+        border-radius: 0.65em;
         overflow: hidden;
         min-height: 100%;
     }
@@ -199,9 +207,9 @@
             max-width: 150px;
             width: 150px;
             min-width: 150px;
-            height: 150px;
-            min-height: 150px;
-            max-height: 150px;
+            height: 170px;
+            min-height: 170px;
+            max-height: 170px;
             border-radius: 12px;
             margin-bottom: 16px;
 
@@ -215,7 +223,7 @@
         .product-title {
             font-size: 22px;
             font-weight: bold;
-            line-height: 26px;
+            line-height: 30px;
             text-align: center;
             color: #000000;
             word-break: break-word;
@@ -223,15 +231,15 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            max-height: 52px;
-            margin-bottom: 16px;
+            max-height: 60px;
+            margin-bottom: 8px;
         }
 
         .product-color {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
 
             .color-marker {
                 width: 28px;
@@ -253,7 +261,7 @@
             background-color: #3c44b1;
             padding: 8px 16px;
             border-radius: 4px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .product-tags {

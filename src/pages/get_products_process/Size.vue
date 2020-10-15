@@ -56,6 +56,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: row;
+        height: calc(100vh - 215px);
     }
 
     .size-category {
@@ -96,7 +97,7 @@
     .size-grid-container {
         flex: 1;
         overflow-y: auto;
-        height: calc(100vh - 226px);
+        height: calc(100vh - 215px);
 
 
     }

@@ -20,6 +20,7 @@
         height: 100vh;
         overflow-y: hidden;
         background-color: #eceef7 !important;
+        user-select: none;
     }
 
     .pointer {

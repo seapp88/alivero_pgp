@@ -39,7 +39,7 @@
     .tags-container {
         flex: 1;
         overflow-y: auto;
-        height: calc(100vh - 226px);
+        height: calc(100vh - 215px);
     }
 
     .tag-grid {

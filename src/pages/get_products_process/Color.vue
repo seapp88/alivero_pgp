@@ -1,6 +1,6 @@
 <template>
 
-    <div class="p-4 d-flex flex-column">
+    <div class="step-container p-4 d-flex flex-column">
 
         <div class="step-title mb-3">Вы можете выбрать до 6 цветов для этого товара</div>
         <div class="colors-switch d-flex">
@@ -59,9 +59,9 @@
                                     </div>
                                 </div>-->
 
-<!--
-                <div class="color-palette-title">Часто используемые цвета</div>
--->
+                <!--
+                                <div class="color-palette-title">Часто используемые цвета</div>
+                -->
 
                 <div class="color-grid">
 
@@ -82,8 +82,6 @@
         </div>
 
 
-
-
     </div>
 
 
@@ -101,7 +99,10 @@
 
 <style scoped lang="scss">
 
-
+    .step-container {
+        border-bottom-right-radius: 0.65rem !important;
+        border-top-right-radius: 0.65rem !important;
+    }
 
 
     .card-chooser {
@@ -134,7 +135,7 @@
             color: #3c44b1;
             font-weight: bold;
             border-top-color: #3c44b1;
-
+            box-shadow: 2px -5px 10px #3b3e6652;
         }
     }
 

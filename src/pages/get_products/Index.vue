@@ -22,12 +22,11 @@
 
 <style scoped>
 
-
-
     .content-wrapper {
         overflow-y: auto;
         flex: 1;
         height: calc(100vh - 115px);
+        background-color: #e7e9f5;
     }
 
 </style>

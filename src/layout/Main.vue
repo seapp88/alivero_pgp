@@ -2,7 +2,7 @@
     <div class="main-layout">
         <app-header></app-header>
         <div class="app-content px-3 pt-3 pb-2">
-            <div class="app-content-wrapper card card-box overflow-hidden">
+            <div class="app-content-wrapper card card-box overflow-hidden bg-transparent border-second">
                 <router-view></router-view>
             </div>
         </div>

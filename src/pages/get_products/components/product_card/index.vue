@@ -2,7 +2,9 @@
     <router-link :to="'/get-products-process/' + id">
         <div class="product-card card card-box overflow-hidden">
             <div class="product-img"
-                 :style="{'background-image': 'url(' + require('@/assets/img/alivero-img/no_image.png') + ')'}"></div>
+                 :style="{ backgroundImage: `url(${backgroundUrl})` }"></div>
+
+
 
             <div class="product-info p-3">
                 <div class="title mt-1 mb-2">{{ title }}</div>
@@ -15,7 +17,16 @@
 </template>
 
 <script>
+
+    import backgroundUrl from "@/assets/img/alivero-img/no_image.png";
+
     export default {
+        data() {
+            return {
+                backgroundUrl,
+            };
+        },
+
         props: {
             id: {
                 type: Number,
@@ -36,6 +47,8 @@
 
 <style scoped lang="scss">
 
+
+
     .product-card {
         display: flex;
         flex-direction: row;
@@ -47,7 +60,6 @@
             box-shadow: none!important;
         }
 
-
     }
 
 
@@ -57,6 +69,7 @@
         width: 160px;
         background-size: cover;
         height: auto;
+        background-position: center;
 
 
     }

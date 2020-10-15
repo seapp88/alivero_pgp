@@ -25,7 +25,7 @@
                 <div class="empty-screen" v-if="!$store.state.dataset.recentProducts.length">
                     <div class="empty-screen-message">
                         <div class="img">
-                            <img src="@/assets/img/alivero-img/undraw_empty_xct9 (1).svg" alt="">
+                            <img src="@/assets/img/alivero-img/accept_empty.svg" alt="">
                         </div>
                         <div class="title">
                             Список принятых товаров пуст
