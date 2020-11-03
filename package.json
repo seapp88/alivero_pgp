@@ -1,6 +1,6 @@
 {
   "name": "alivero_pgp",
-  "version": "0.1.27",
+  "version": "0.1.31",
   "private": true,
   "author": {
     "name": "Ited Company",
@@ -20,6 +20,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@thiagoelg/node-printer": "^0.5.3",
     "axios": "^0.20.0",
     "chroma-js": "^2.1.0",
     "core-js": "^3.6.5",
@@ -27,7 +28,7 @@
     "hexsorter": "^1.5.0",
     "minisearch": "^3.0.0",
     "moment": "^2.29.1",
-    "printer": "git+https://github.com/tojocky/node-printer.git",
+    "printer": "^0.4.0",
     "simple-keyboard": "^2.30.31",
     "socket.io-client": "^2.3.1",
     "swiper": "^6.3.2",
@@ -46,7 +47,7 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "electron": "^9.0.0",
+    "electron": "6.1.7",
     "electron-devtools-installer": "^3.1.0",
     "electron-rebuild": "^2.2.0",
     "node-sass": "^4.12.0",

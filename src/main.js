@@ -17,8 +17,8 @@ import NumPad from './components/numpad'
 Vue.component('keyboard', Keyboard);
 Vue.component('num-pad', NumPad);
 
-const BASE_URL = 'http://10.10.10.10:3000';
-// const BASE_URL = 'https://alivero.jelastic.regruhosting.ru';
+// const BASE_URL = 'http://10.10.10.10:3000';
+const BASE_URL = 'https://wms.alivero.ru';
 
 import axios from 'axios'
 const instance = axios.create({
@@ -54,13 +54,18 @@ Vue.prototype.$hexSorter = sort;
 
 Vue.use(VueSweetalert2);
 
-// const socket = require('socket.io-client')(BASE_URL);
-// socket.on('connect', () => {
-//     store.dispatch('setStateConnect', true)
-// });
-// socket.on('disconnect', () => {
-//     store.dispatch('setStateConnect', false)
-// });
+const socket = require('socket.io-client')(BASE_URL);
+socket.on('connect', () => {
+    store.dispatch('setStateConnect', true)
+    socket.emit('who:pgp')
+});
+socket.on('disconnect', () => {
+    store.dispatch('setStateConnect', false)
+});
+
+socket.on('update:dataset', () => {
+    store.dispatch('dataset/setState')
+})
 
 Vue.config.productionTip = false;
 

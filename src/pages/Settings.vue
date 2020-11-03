@@ -20,38 +20,15 @@
                         </div>
 
                         <div class="card-body d-flex p-4">
-                            <button class="btn btn-warning btn-lg font-size-lg mx-3 w-100" type="button">
+                            <button class="btn btn-warning btn-lg font-size-lg mx-3 w-100" type="button" @click="syncData">
                                 <i class="fa fa-sync-alt pr-2"></i>
                                 Синхронизировать данные
                             </button>
 
-                            <button class="btn btn-outline-second btn-lg font-size-lg mx-3 w-100" type="button">
+                            <button class="btn btn-outline-second btn-lg font-size-lg mx-3 w-100" type="button" @click="resetCache">
                                 <i class="fa fa-eraser pr-2"></i>
                                 Очистить кэш
                             </button>
-                        </div>
-                    </div>
-
-                    <div class="card card-box mb-3">
-                        <div class="list-group-item border-top-0 border-left-0 border-right-0 d-flex bg-light align-items-center text-second py-3">
-                            <i class="fa fa-print pr-3 font-size-xl"></i>
-                            <h5 class="mt-0 mb-0 font-weight-bold font-size-xl">Принтеры</h5>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="font-weight-bold font-size-lg mb-3">
-                                Выберите принтер, который будет использоваться по умолчанию
-                            </div>
-                            <div class="print-grid">
-                                <div class="print-item active">
-                                    <i class="fa fa-print font-size-xl mb-3"></i>
-                                    <div class="print-name">Zebra QLN 320</div>
-                                </div>
-                                <div class="print-item" v-for="i in 4">
-                                    <i class="fa fa-print font-size-xl mb-3"></i>
-                                    <div class="print-name">Zebra QLN 320</div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -70,28 +47,47 @@
 
                                 <div class="col-4 mb-2">
                                     <label for="inputStock">Склад</label>
-                                    <select id="inputStock" class="form-control">
-                                        <option selected="">Выберите склад</option>
-                                        <option>...</option>
+                                    <select id="inputStock" class="form-control" v-model="selectStock">
+                                        <option v-for="(item, index) in listStock" :value="item.id" :key="index">{{ item.name }}</option>
                                     </select>
                                 </div>
 
                                 <div class="col-4 mb-2">
                                     <label for="inputRack">Стеллаж</label>
-                                    <select id="inputRack" class="form-control">
-                                        <option selected="">Выберите стеллаж</option>
-                                        <option>...</option>
+                                    <select id="inputRack" class="form-control" v-model="selectRack">
+                                        <option v-for="(item, index) in listRack" :value="item.id" :key="index">{{ item.name }}</option>
                                     </select>
                                 </div>
 
                                 <div class=" col-4 mb-2">
                                     <label for="inputCell">Ячейка</label>
-                                    <select id="inputCell" class="form-control">
-                                        <option selected="">Выберите ячейку</option>
-                                        <option>...</option>
+                                    <select id="inputCell" class="form-control" v-model="selectCell">
+                                        <option v-for="(item, index) in listCell" :value="item.id" :key="index">{{ item.name }}</option>
                                     </select>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-box mb-3">
+                        <div class="list-group-item border-top-0 border-left-0 border-right-0 d-flex bg-light align-items-center text-second py-3">
+                            <i class="fa fa-print pr-3 font-size-xl"></i>
+                            <h5 class="mt-0 mb-0 font-weight-bold font-size-xl">Принтеры</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="font-weight-bold font-size-lg mb-3">
+                                Выберите принтер, который будет использоваться по умолчанию
+                            </div>
+                            <div class="print-grid">
+                                <div class="print-item"
+                                     v-for="printer in printerList"
+                                     :class="{active: printer.name === $store.state.dataset.printer}"
+                                     @click="$store.dispatch('dataset/setPrinter', printer.name)">
+                                    <i class="fa fa-print font-size-xl mb-3"></i>
+                                    <div class="print-name">{{ printer.name }}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,11 +106,74 @@
 
 <script>
 
+    const printer = require("@thiagoelg/node-printer");
+    // const printer = require("printer");
 
     export default {
+        data(){
+            return{
+                printerList: [],
+                listStock: [],
+                listRack: [],
+                listCell: [],
+                selectStock: null,
+                selectRack: null,
+                selectCell: null
+            }
+        },
+        watch: {
+            selectStock(){
+                this.getRack();
+                this.listCell = [];
+                this.selectRack = null;
+                this.selectCell = null;
+            },
+            selectRack(){
+                this.getCell();
+                this.selectCell = null;
+            },
+            selectCell(val){
+                this.$store.dispatch('dataset/setCell', val)
+            }
+        },
         created(){
-            // let printers = printer.getPrinters();
-            // console.log(printers)
+            this.printerList = printer.getPrinters();
+            this.getStock()
+        },
+        methods: {
+            syncData(){
+                this.$store.dispatch('dataset/setState')
+            },
+            resetCache(){
+                localStorage.removeItem('vuex');
+            },
+            async getStock(){
+                try{
+                    let { data } = await this.$http.get('/stock');
+                    this.listStock = data;
+                    return Promise.resolve()
+                }catch (e) {
+                    console.log(e)
+                }
+            },
+            async getRack(){
+                try{
+                    let { data } = await this.$http.get('/stock-rack/' + this.selectStock);
+                    this.listRack = data;
+                    return Promise.resolve()
+                }catch (e) {
+                    console.log(e)
+                }
+            },
+            async getCell(){
+                try{
+                    let { data } = await this.$http.get('/stock-rack-cell/' + this.selectRack);
+                    this.listCell = data;
+                    return Promise.resolve()
+                }catch (e) {
+                    console.log(e)
+                }
+            },
         }
     }
 </script>

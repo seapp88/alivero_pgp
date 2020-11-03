@@ -82,7 +82,7 @@ export default {
         categorySize: [],
         sizes: [],
         tags: [],
-        stock_rack_cell_id: 1,
+        stock_rack_cell_id: null,
         printer: null
     },
     getters: {
@@ -148,6 +148,12 @@ export default {
         },
         setPrinter(state, data){
             state.printer = data;
+        },
+        addRecentProduct(state, data){
+            let index = state.recentProducts.findIndex(i => i.id !== data.id)
+            if(index >= 0){
+                state.recentProducts.unshift(data)
+            }
         }
     },
     actions: {
@@ -183,6 +189,9 @@ export default {
         },
         setPrinter({commit}, data){
             commit('setPrinter', data);
+        },
+        addRecentProduct({commit}, data){
+            commit('addRecentProduct', data);
         }
     }
 }

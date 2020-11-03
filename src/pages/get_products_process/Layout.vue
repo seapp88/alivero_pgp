@@ -68,6 +68,11 @@
 <script>
     import MenuBar from './components/menu_bar/index'
 
+    const printer = require("@thiagoelg/node-printer");
+    // const printer = require("printer");
+
+    const zpl = require('../../../utils/zpl');
+
     export default {
         components: {
             MenuBar
@@ -120,12 +125,45 @@
                     valid = false
                 }
 
+                if(!this.$store.state.dataset.stock_rack_cell_id){
+                    alert('Перейдите в настройики и выберите место хранения');
+                    valid = false
+                }
+
+                if(!this.$store.state.dataset.stock_rack_cell_id){
+                    alert('Перейдите в настройики и выберите принтер')
+                    valid = false
+                }
+
                 if(valid){
                     try{
                         let res = await this.$http.post('/accept', data);
-                        console.log(res.data)
+
+                        this.$store.dispatch('dataset/addRecentProduct', this.product);
+
+                        res.data.forEach(barcode => {
+                            let tmpMain = zpl.tmpMain({
+                                name: this.product.name,
+                                brand: this.product.brand.name,
+                                model: this.product.model,
+                                color: '',
+                                size: '',
+                                id: barcode
+                            });
+
+                            printer.printDirect({
+                                data: tmpMain,
+                                printer: this.$store.state.dataset.printer,
+                                type: "RAW",
+                                success:function(){
+                                    console.log("printed:");
+                                }, error:function(err){console.log(err);}
+                            });
+                        });
+                        this.$router.push('/')
                     }catch (e) {
                         console.log(e)
+                        alert('Не удалось принять товар проверьте подключение к интернету')
                     }
                 }
 

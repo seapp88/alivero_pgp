@@ -18,10 +18,6 @@ protocol.registerSchemesAsPrivileged([
     {scheme: 'app', privileges: {secure: true, standard: true}}
 ]);
 
-const printer = require("printer");
-let printers = printer.getPrinters();
-console.log(printers)
-
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
@@ -31,6 +27,7 @@ function createWindow() {
         webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+            webSecurity: false,
             nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
         }
     })
@@ -43,17 +40,9 @@ function createWindow() {
         createProtocol('app');
         // Load the index.html when not in development
         win.loadURL('app://./index.html');
-        win.webContents.openDevTools()
         setTimeout(() => {
             autoUpdater.checkForUpdatesAndNotify().then((data) => {
-                win.webContents.send('update', data);
             }).catch((e) => {
-                console.log(e)
-                dialog.showMessageBox({
-                    title: 'No Updates',
-                    message: e.message
-                })
-                win.webContents.send('update', e.message);
             })
         }, 5000)
     }

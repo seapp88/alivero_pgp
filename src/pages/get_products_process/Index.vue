@@ -20,11 +20,11 @@
                             </div>
                         </div>
                         <div class="actions d-flex flex-column">
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3">
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3" v-if="isColor" @click="$router.push('/get-products-process/' + $route.params.product_id + '/color')">
                                 <i class="flaticon-paint-brush pr-3"></i>Выбрать цвета</button>
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3">
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3" v-if="isSize" @click="$router.push('/get-products-process/' + $route.params.product_id + '/size')">
                                 <i class="flaticon-measuring-tape pr-3"></i>Выбрать размер</button>
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold ">
+                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold " @click="$router.push('/get-products-process/' + $route.params.product_id + '/tag')">
                                 <i class="flaticon-hastag pr-2"></i>Добавить теги</button>
                         </div>
                     </div>
@@ -93,9 +93,20 @@
 
 <script>
     export default {
+        data(){
+            return {
+                isColor: false,
+                isSize: false,
+                category: null
+            }
+        },
         created(){
-
-        }
+            let product = this.$store.getters['dataset/product'](this.$route.params.product_id);
+            let category = this.$store.getters['dataset/categoryById'](product.category_id);
+            this.isColor = !!category.is_select_color;
+            this.isSize = !!category.is_select_size;
+            this.category = category
+        },
     }
 </script>
 
