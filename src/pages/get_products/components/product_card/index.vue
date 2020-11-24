@@ -9,7 +9,6 @@
             <div class="product-info p-3">
                 <div class="title mt-1 mb-2">{{ title }}</div>
                 <div class="brand">Бренд: {{ brand }}</div>
-                <div class="model">Модель: {{ model }}</div>
             </div>
 
         </div>
@@ -29,16 +28,13 @@
 
         props: {
             id: {
-                type: Number,
-                default: 1
+                type: String,
+                default: ''
             },
             brand: {
                 type: String
             },
             title: {
-                type: String
-            },
-            model: {
                 type: String
             },
             photo: {}

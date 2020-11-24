@@ -91,15 +91,14 @@
                 <div class="product-grid" v-else>
                     <product-card v-for="(i, index) in searchList"
                                   :key="index"
-                                  :brand="i.brand.name"
-                                  :title="i.name"
-                                  :model="i.model"
+                                  :brand="i.brand"
+                                  :title="i.title"
                                   :photo="i.photo"
                                   :id="i.id"/>
                 </div>
             </div>
 
-            <div class="catalog-btn bg-primary px-3 py-4 w-100 text-white text-center font-weight-bold font-size-xl rounded mt-3">Перейти в каталог<i class="fa fa-arrow-right pl-3"></i></div>
+            <div class="catalog-btn bg-primary px-3 py-4 w-100 text-white text-center font-weight-bold font-size-xl rounded mt-3" @click="$router.push('/get-products/' + $route.params.company_id + '/category')">Перейти в каталог<i class="fa fa-arrow-right pl-3"></i></div>
 
 
         </div>
@@ -127,7 +126,7 @@
         watch: {
             searchText(val){
                 if(val !== ''){
-                    this.searchList = this.$store.getters['dataset/searchProduct'](val)
+                    this.searchList = this.$store.getters['dataset/searchProduct'](val, +this.$route.params.company_id)
                 }else{
                     this.searchList = [];
                 }

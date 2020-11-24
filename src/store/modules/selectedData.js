@@ -16,6 +16,7 @@ export default {
         },
     },
     mutations: {
+
         clearState(state){
             state.colors = [];
             state.sizeCategory = null;
@@ -57,6 +58,9 @@ export default {
         },
     },
     actions: {
+
+
+
         clearState({commit}){
             commit('clearState');
         },

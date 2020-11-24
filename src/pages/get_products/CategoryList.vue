@@ -2,7 +2,7 @@
     <div class="p-4 d-flex flex-column">
         <div class="d-flex mb-3 align-items-center">
             <div class="page-title flex-grow-1">
-                {{ $store.getters['dataset/templateById']($route.params.spec_id).name }}
+                Выберите категорию
             </div>
 <!--            <div class="page-search">-->
 <!--                <div class="form-group mb-0">-->
@@ -20,7 +20,7 @@
         <div class="card overflow-hidden">
             <div class="grid-wrapper">
                 <div class="category-grid">
-                    <category-card v-for="(item, index) in $store.getters['dataset/categories']($route.params.spec_id)" :key="index" :title="item.name" :id="item.id" />
+                    <category-card v-for="(item, index) in $store.getters['dataset/categories']($route.params.company_id)" :key="index" :title="item" />
                 </div>
             </div>
         </div>

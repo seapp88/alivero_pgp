@@ -1,6 +1,6 @@
 <template>
     <div class="p-4 d-flex flex-column">
-        <div class="step-title mb-3">Выберите артикул</div>
+        <div class="step-title mb-3">{{ product ? product.title : 'Выберите артикул' }}</div>
         <div class="card overflow-hidden shadow-none border-0">
             <div class="card-chooser card">
 
@@ -25,7 +25,6 @@
                 <div class="scroll-container p-4" v-else>
                     <div class="articles-grid">
 
-
                         <div v-for="i in product.articles" class="articles-item card card-body d-flex flex-row align-items-center" :class="{active: $store.state.selectedData.articles && i.id === $store.state.selectedData.articles.id}"
                              @click="selectArticle(i)">
                             <div class="article-img mr-4">
@@ -36,13 +35,19 @@
                                      alt="">
                             </div>
                             <div class="article-info flex-grow-1">
-                                <h3 class="text-black font-weight-bold mb-3">{{ i.barcode }}</h3>
+                                <h3 class="text-black font-weight-bold mb-3">{{ i.vendor_code }}</h3>
                                 <div class="divider bg-neutral-second mb-3"></div>
 
                                 <div class="colors d-flex flex-wrap">
-                                    <div class="color-item d-flex align-items-center flex-nowrap mr-3" v-for="color in i.colors"><span
-                                            class="badge badge-circle mr-2" :style="`background-color: ${color.hex}`">{{ color.name }}</span><span
-                                            class="font-size-lg ">{{ color.name }}</span></div>
+                                    {{ i.color }}
+
+                                    <div v-for="sku in i.skus">
+                                        {{ sku.size }}
+                                    </div>
+
+<!--                                    <div class="color-item d-flex align-items-center flex-nowrap mr-3" v-for="color in i.colors"><span-->
+<!--                                            class="badge badge-circle mr-2" :style="`background-color: ${color.hex}`">{{ color.name }}</span><span-->
+<!--                                            class="font-size-lg ">{{ $store.state.selectedData.articles.color }}</span></div>-->
 
                                 </div>
 

@@ -22,20 +22,32 @@ const routes = [
                 children: [
                     {
                         path: '',
+                        component: require('../pages/get_products/SelectCompany').default,
+                    },
+                    {
+                        path: ':company_id',
                         component: require('../pages/get_products/RecentProductList').default,
                     },
                     {
-                        path: ':spec_id',
+                        path: ':company_id/category',
                         component: require('../pages/get_products/CategoryList').default,
                     },
                     {
-                        path: ':spec_id/:category_id',
+                        path: ':company_id/category/:name',
                         component: require('../pages/get_products/ProductList').default,
                     },
-                    {
-                        path: 'search',
-                        component: require('../pages/get_products/SearchResult').default,
-                    }
+                    // {
+                    //     path: ':spec_id',
+                    //     component: require('../pages/get_products/CategoryList').default,
+                    // },
+                    // {
+                    //     path: ':spec_id/:category_id',
+                    //     component: require('../pages/get_products/ProductList').default,
+                    // },
+                    // {
+                    //     path: 'search',
+                    //     component: require('../pages/get_products/SearchResult').default,
+                    // }
                 ]
             },
             {

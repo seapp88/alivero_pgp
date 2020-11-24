@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/get-products/' + $route.params.spec_id + '/' + id">
+    <router-link :to="'/get-products/' + $route.params.company_id + '/category/' + title">
         <div class="category-card card card-box px-4 py-5">
             {{ title }}
         </div>
@@ -11,9 +11,6 @@
         props: {
             title: {
                 type: String
-            },
-            id: {
-                type: Number
             }
         }
     }

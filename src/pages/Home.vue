@@ -9,11 +9,11 @@
                     <span><strong class="d-block">Выберите принтер!</strong>Перейдите в Настройки, чтобы выбрать принтер для печати этикеток.</span>
                 </div>
 
-                <div class="alert d-flex align-items-center pl-2 align-content-center alert-danger alert-dismissible fade show mb-4"
-                     role="alert" v-if="!this.$store.state.dataset.stock_rack_cell_id">
-                    <span class="font-size-lg d-block d-40 mr-2 text-center"><i class="fas fa-exclamation-triangle"></i></span>
-                    <span><strong class="d-block">Выберите место хранения!</strong> Чтобы принять товар, перейдите в настройки и назначьте место хранения.</span>
-                </div>
+<!--                <div class="alert d-flex align-items-center pl-2 align-content-center alert-danger alert-dismissible fade show mb-4"-->
+<!--                     role="alert" v-if="!this.$store.state.dataset.stock_rack_cell_id">-->
+<!--                    <span class="font-size-lg d-block d-40 mr-2 text-center"><i class="fas fa-exclamation-triangle"></i></span>-->
+<!--                    <span><strong class="d-block">Выберите место хранения!</strong> Чтобы принять товар, перейдите в настройки и назначьте место хранения.</span>-->
+<!--                </div>-->
             </div>
 
 

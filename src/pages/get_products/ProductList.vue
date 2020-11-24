@@ -1,11 +1,11 @@
 <template>
     <div class="p-4 d-flex flex-column">
         <div class="d-flex mb-3 align-items-center">
-            <div class="btn-back mr-2 pointer " @click="$router.go(-1)">
+            <div class="btn-back mr-2 pointer " @click="$router.push('/get-products/' + $route.params.company_id + '/category')">
                 <i class="fa fa-arrow-left"></i>
             </div>
             <div class="page-title flex-grow-1">
-                {{ $store.getters['dataset/categoryById']($route.params.category_id).name }}
+                {{ $route.params.name }}
             </div>
 <!--            <div class="page-search">-->
 <!--                <div class="form-group mb-0">-->
@@ -23,12 +23,11 @@
         <div class="card overflow-hidden shadow-none border-0">
             <div class="grid-wrapper">
                 <div class="product-grid">
-                    <product-card v-for="(item, index) in $store.getters['dataset/products']($route.params.category_id)"
+                    <product-card v-for="(item, index) in $store.getters['dataset/products']($route.params.company_id, $route.params.name)"
                                   :key="index"
                                   :id="item.id"
-                                  :title="item.name"
-                                  :brand="item.brand.name"
-                                  :model="item.model"
+                                  :title="item.title"
+                                  :brand="item.brand"
                                   :photo="item.photo"/>
                 </div>
 

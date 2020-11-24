@@ -2,7 +2,7 @@
     <div class="menu-wrapper">
         <div class="menu-steps">
             <menu-item title="Артикулы" icon="fa fa-tags" :to="'/get-products-process/' + $route.params.product_id + '/'"/>
-            <menu-item title="Выбрать размер" icon="flaticon-measuring-tape" :to="'/get-products-process/' + $route.params.product_id + '/size'" v-if="isSize"/>
+            <menu-item title="Выбрать размер" icon="flaticon-measuring-tape" :to="'/get-products-process/' + $route.params.product_id + '/size'" v-if="!!$store.state.selectedData.articles.id"/>
 <!--            <menu-item title="Добавить теги" icon="flaticon-hastag" :to="'/get-products-process/' + $route.params.product_id + '/tag'"/>-->
         </div>
 
@@ -30,10 +30,6 @@
         },
         created(){
             let product = this.$store.getters['dataset/product'](this.$route.params.product_id);
-            let category = this.$store.getters['dataset/categoryById'](product.category_id);
-            this.isColor = !!category.is_select_color;
-            this.isSize = !!category.is_select_size;
-            this.category = category
         },
         methods: {
 

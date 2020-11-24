@@ -10,8 +10,8 @@
             <div class="process-product-card" v-if="product">
 
                 <div class="product-card-header d-flex align-items-center justify-content-between pl-3 pr-2 py-2">
-                    <div class="product-brand flex-grow-1">{{ product.brand.name }}</div>
-                    <div class="product-model">Модель: {{ product.model }}</div>
+                    <div class="product-brand flex-grow-1">{{ product.title }}</div>
+                    <div class="product-model">{{ product.brand }}</div>
                 </div>
 
                 <div class="product-card-body p-3">
@@ -20,13 +20,13 @@
                         <img v-if="product.photo && !$store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + product.photo" alt="">
                         <img v-if="product.photo && $store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + $store.state.selectedData.articles.photo" alt="">
                     </div>
-                    <div class="product-title mb-4">{{ product.name }}</div>
+                    <div class="product-title mb-4">{{ $store.state.selectedData.articles.vendor_code }}</div>
                     <div class="product-color">
                         <div v-if="!$store.state.selectedData.articles">
                             <div class="product-size mb-0 bg-danger">Артикул не выбран!</div>
                         </div>
                         <div v-else>
-                            <div class="product-size mb-0">{{ $store.state.selectedData.articles.barcode }}</div>
+                            <div class="product-size mb-0">{{ $store.state.selectedData.articles.vendor_code }}</div>
                         </div>
                     </div>
                     <div class="product-size"
@@ -91,10 +91,10 @@
             this.$store.dispatch('selectedData/clearState');
             this.product = this.$store.getters['dataset/product'](this.$route.params.product_id);
 
-            let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
-            console.log(category)
-            this.isSize = !!category.is_select_size;
-            this.category = category
+            // let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
+            // console.log(category)
+            // this.isSize = !!category.is_select_size;
+            // this.category = category
         },
         methods: {
             async acceptProduct(){

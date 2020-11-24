@@ -41,23 +41,49 @@ let icons = {
 };
 
 let miniSearch = new MiniSearch({
-    fields: ['name', 'model'], // fields to index for full-text search
-    storeFields: ['id', 'name', 'model', 'brand', 'photo']
+    fields: ['title', 'brand'], // fields to index for full-text search
+    storeFields: ['id', 'title', 'brand', 'photo', 'company_id']
 });
 
 export default {
     namespaced: true,
     state: {
-        recentProducts: [],
-        templates: [],
         categories: [],
         products: [],
+        companies: [],
+
+
+
+        recentProducts: [],
+        templates: [],
         categorySize: [],
         sizes: [],
         stock_rack_cell_id: null,
         printer: null
     },
     getters: {
+        searchProduct: state => (query, company_id) => {
+            return miniSearch.search(query, { prefix: true }).filter(i => i.company_id === company_id)
+        },
+        categories: state => company_id => {
+            let products =  state.products.filter(i => i.company_id === +company_id);
+            let categories = [];
+            products.forEach(i => {
+                if(!categories.includes(i.category)){
+                    categories.push(i.category)
+                }
+            });
+            return categories.sort();
+        },
+        products: state => (company_id, category) => {
+            return state.products.filter(i => i.company_id === +company_id && i.category === category);
+        },
+        product: state => id => {
+            return state.products.filter(i => i.id === id)[0];
+        },
+
+
+
         recentProducts: state => {
             let list = [];
             state.recentProducts.forEach(id => {
@@ -72,19 +98,14 @@ export default {
             let index = state.templates.findIndex(i => i.id === +template_id);
             return state.templates[index]
         },
-        categories: state => template_id => {
-            return state.categories.filter(i => i.template_id === +template_id);
-        },
         categoryById: state => category_id => {
             let index = state.categories.findIndex(i => i.id === +category_id);
             return state.categories[index]
         },
-        products: state => category_id => {
-            return state.products.filter(i => i.category_id === +category_id);
-        },
-        product: state => id => {
-            return state.products.filter(i => i.id === +id)[0];
-        },
+        // products: state => category_id => {
+        //     return state.products.filter(i => i.category_id === +category_id);
+        // },
+
         sizes: state => category_id => {
             if(category_id){
                 return state.sizes.filter(i => i.category_id === +category_id);
@@ -97,18 +118,18 @@ export default {
             let size = state.sizes[index];
             size.text = `${size.name} (RU ${size.ru})`
             return size;
-        },
-        searchProduct: state => query => {
-            return miniSearch.search(query, { prefix: true })
-        },
+        }
     },
     mutations: {
         setState(state, data){
-            state.templates = data.templates;
             state.categories = data.categories;
             state.products = data.products;
-            state.categorySize = data.categorySize;
-            state.sizes = data.sizes;
+            state.companies = data.companies;
+
+            // state.templates = data.templates;
+
+            // state.categorySize = data.categorySize;
+            // state.sizes = data.sizes;
         },
         setCell(state, data){
             state.stock_rack_cell_id = data;
@@ -133,22 +154,15 @@ export default {
         async setState({commit}){
             try{
                 let { data } = await this.$app.$http.get('/sync');
-
-                data.templates = data.templates.map(i => {
-                    if(icons[i.name]){
-                        i.icon = icons[i.name]
-                    }else{
-                        i.icon = 'flaticon-more'
-                    }
-                    return i
-                });
-
                 commit('setState', data);
+
+                console.log(data)
 
                 miniSearch.addAll(data.products);
 
                 return Promise.resolve()
             }catch (e) {
+                console.log(e)
                 this.$app.$swal.fire({
                     icon: 'error',
                     title: 'Oops...',
