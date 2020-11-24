@@ -1,10 +1,9 @@
 <template>
     <div class="menu-wrapper">
         <div class="menu-steps">
-            <menu-item title="Ранее использованные" icon="fa fa-history" :to="'/get-products-process/' + $route.params.product_id + '/'"/>
-            <menu-item title="Выбрать цвета" icon="flaticon-paint-brush" :to="'/get-products-process/' + $route.params.product_id + '/color'" v-if="isColor"/>
+            <menu-item title="Артикулы" icon="fa fa-tags" :to="'/get-products-process/' + $route.params.product_id + '/'"/>
             <menu-item title="Выбрать размер" icon="flaticon-measuring-tape" :to="'/get-products-process/' + $route.params.product_id + '/size'" v-if="isSize"/>
-            <menu-item title="Добавить теги" icon="flaticon-hastag" :to="'/get-products-process/' + $route.params.product_id + '/tag'"/>
+<!--            <menu-item title="Добавить теги" icon="flaticon-hastag" :to="'/get-products-process/' + $route.params.product_id + '/tag'"/>-->
         </div>
 
         <div class="menu-exit">
@@ -25,7 +24,8 @@
             return {
                 isColor: false,
                 isSize: false,
-                category: null
+                category: null,
+                product: null
             }
         },
         created(){

@@ -23,7 +23,13 @@
         <div class="card overflow-hidden shadow-none border-0">
             <div class="grid-wrapper">
                 <div class="product-grid">
-                    <product-card v-for="(item, index) in $store.getters['dataset/products']($route.params.category_id)" :key="index" :id="item.id" :title="item.name" :brand="item.brand.name" :model="item.model"/>
+                    <product-card v-for="(item, index) in $store.getters['dataset/products']($route.params.category_id)"
+                                  :key="index"
+                                  :id="item.id"
+                                  :title="item.name"
+                                  :brand="item.brand.name"
+                                  :model="item.model"
+                                  :photo="item.photo"/>
                 </div>
 
             </div>

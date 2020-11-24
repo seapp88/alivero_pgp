@@ -2,7 +2,7 @@
     <router-link :to="'/get-products-process/' + id">
         <div class="product-card card card-box overflow-hidden">
             <div class="product-img"
-                 :style="{ backgroundImage: `url(${backgroundUrl})` }"></div>
+                 :style="{ backgroundImage: `url(${photo ? $http.defaults.baseURL.replace('api/v1/pgp', '') + photo : backgroundUrl})` }"></div>
 
 
 
@@ -40,7 +40,8 @@
             },
             model: {
                 type: String
-            }
+            },
+            photo: {}
         }
     }
 </script>

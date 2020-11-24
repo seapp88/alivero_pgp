@@ -42,33 +42,8 @@ let icons = {
 
 let miniSearch = new MiniSearch({
     fields: ['name', 'model'], // fields to index for full-text search
-    storeFields: ['id', 'name', 'model', 'brand']
+    storeFields: ['id', 'name', 'model', 'brand', 'photo']
 });
-
-const sortColor = (collections) => {
-
-    collections = Object.assign([], collections);
-    const sorted = [collections.shift()];
-
-    while(collections.length) {
-        const [a] = sorted, c = { d: Infinity };
-
-        for(let [i, b] of Object.entries(collections)) {
-            const average = Math.floor((
-                Math.abs(a.r - b.r) +
-                Math.abs(a.g - b.g) +
-                Math.abs(a.b - b.b)
-            ) / 3);
-
-            if(average < c.d) {
-                Object.assign(c, { d: average, i: i });
-            }
-        }
-
-        sorted.unshift(collections.splice(c.i, 1)[0]);
-    }
-    return sorted;
-};
 
 export default {
     namespaced: true,
@@ -77,15 +52,22 @@ export default {
         templates: [],
         categories: [],
         products: [],
-        colorsPopulate: [],
-        colors: [],
         categorySize: [],
         sizes: [],
-        tags: [],
         stock_rack_cell_id: null,
         printer: null
     },
     getters: {
+        recentProducts: state => {
+            let list = [];
+            state.recentProducts.forEach(id => {
+                let item = state.products.filter(i => i.id === +id)[0];
+                if(item){
+                    list.unshift(item)
+                }
+            });
+            return list;
+        },
         templateById: state => template_id => {
             let index = state.templates.findIndex(i => i.id === +template_id);
             return state.templates[index]
@@ -110,19 +92,11 @@ export default {
                 return []
             }
         },
-        colorById: state => id => {
-            let index = state.colors.findIndex(i => i.id === +id);
-            return state.colors[index];
-        },
         sizeById: state => id => {
             let index = state.sizes.findIndex(i => i.id === +id);
             let size = state.sizes[index];
             size.text = `${size.name} (RU ${size.ru})`
             return size;
-        },
-        tagById: state => id => {
-            let index = state.tags.findIndex(i => i.id === +id);
-            return state.tags[index];
         },
         searchProduct: state => query => {
             return miniSearch.search(query, { prefix: true })
@@ -133,15 +107,8 @@ export default {
             state.templates = data.templates;
             state.categories = data.categories;
             state.products = data.products;
-            state.colorsPopulate = data.colorsPopulate;
-            state.colors = sortColor(data.colors.reduce((m, e) => (m.push(Object.assign(e, {
-                r: parseInt(e.hex.substring(1, 3), 16) || 0,
-                g: parseInt(e.hex.substring(3, 5), 16) || 0,
-                b: parseInt(e.hex.substring(5, 7), 16) || 0
-            })), m), []));
             state.categorySize = data.categorySize;
             state.sizes = data.sizes;
-            state.tags = data.tags;
         },
         setCell(state, data){
             state.stock_rack_cell_id = data;
@@ -150,11 +117,17 @@ export default {
             state.printer = data;
         },
         addRecentProduct(state, data){
-            let index = state.recentProducts.findIndex(i => i.id !== data.id)
-            if(index >= 0){
-                state.recentProducts.unshift(data)
+            if(state.recentProducts.includes(data)){
+                state.recentProducts.push(state.recentProducts.splice(state.recentProducts.indexOf(data), 1))
+            }else{
+                if(state.recentProducts.length >= 12){
+                    state.recentProducts.splice(11, 1)
+                }
+                state.recentProducts.push(data)
             }
+
         }
+
     },
     actions: {
         async setState({commit}){

@@ -40,7 +40,14 @@
                 </div>
                 <!--Список товаров-->
                 <div class="product-grid" v-else>
-                    <product-card v-for="i in $store.state.dataset.recentProducts"></product-card>
+                    <product-card v-for="item in $store.getters['dataset/recentProducts']"
+                                  :key="item.id"
+                                  :id="item.id"
+                                  :title="item.name"
+                                  :brand="item.brand.name"
+                                  :model="item.model"
+                                  :photo="item.photo">
+                    </product-card>
                 </div>
             </div>
 
@@ -82,10 +89,12 @@
                 </div>
                 <!--Список товаров-->
                 <div class="product-grid" v-else>
-                    <product-card v-for="i in searchList"
+                    <product-card v-for="(i, index) in searchList"
+                                  :key="index"
                                   :brand="i.brand.name"
                                   :title="i.name"
                                   :model="i.model"
+                                  :photo="i.photo"
                                   :id="i.id"/>
                 </div>
             </div>
@@ -117,7 +126,6 @@
             searchText(val){
                 if(val !== ''){
                     this.searchList = this.$store.getters['dataset/searchProduct'](val)
-                    console.log(this.searchList)
                 }else{
                     this.searchList = [];
                 }

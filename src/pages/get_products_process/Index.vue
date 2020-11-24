@@ -1,91 +1,111 @@
 <template>
     <div class="p-4 d-flex flex-column">
-        <div class="step-title mb-3">Ранее использованные конфигурации для выбранной модели</div>
+        <div class="step-title mb-3">Выберите артикул</div>
         <div class="card overflow-hidden shadow-none border-0">
             <div class="card-chooser card">
 
 
                 <!--Пустой экран-->
-                <div class="empty-screen p-4 scroll-container">
+                <div class="empty-screen p-4 scroll-container" v-if="!product.articles.length">
                     <div class="empty-screen">
                         <div class="empty-screen-message mb-5">
                             <div class="img">
                                 <img src="@/assets/img/alivero-img/accept_empty.svg" alt="">
                             </div>
                             <div class="title">
-                                Для выбранной модели нет готовых конфигураций
+                                Для выбранной модели нет готовых артикулов
                             </div>
                             <div class="message">
-                                Вы еще не принимали выбранную модель
+                                Обратитесь к администратору
                             </div>
-                        </div>
-                        <div class="actions d-flex flex-column">
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3" v-if="isColor" @click="$router.push('/get-products-process/' + $route.params.product_id + '/color')">
-                                <i class="flaticon-paint-brush pr-3"></i>Выбрать цвета</button>
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold mb-3" v-if="isSize" @click="$router.push('/get-products-process/' + $route.params.product_id + '/size')">
-                                <i class="flaticon-measuring-tape pr-3"></i>Выбрать размер</button>
-                            <button class="btn btn-primary btn-lg font-size-lg font-weight-bold " @click="$router.push('/get-products-process/' + $route.params.product_id + '/tag')">
-                                <i class="flaticon-hastag pr-2"></i>Добавить теги</button>
                         </div>
                     </div>
                 </div>
 
-<!--                <div class="scroll-container p-4">
+                <div class="scroll-container p-4" v-else>
+                    <div class="articles-grid">
 
-                    <div class="color-container">
-                        <div class="palette-title">Палитры</div>
-                        <div class="palette-box d-flex position-relative mb-4 ">
-                            <div class="palette-nav-btn left">
-                                <i class="fa fa-angle-left"></i>
+
+                        <div v-for="i in product.articles" class="articles-item card card-body d-flex flex-row align-items-center" :class="{active: $store.state.selectedData.articles && i.id === $store.state.selectedData.articles.id}"
+                             @click="selectArticle(i)">
+                            <div class="article-img mr-4">
+                                <img v-if="!i.photo" height="50" src="@/assets/img/alivero-img/no_image.png"
+                                     alt="">
+                                <img v-else height="50"
+                                     :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + i.photo"
+                                     alt="">
                             </div>
+                            <div class="article-info flex-grow-1">
+                                <h3 class="text-black font-weight-bold mb-3">{{ i.barcode }}</h3>
+                                <div class="divider bg-neutral-second mb-3"></div>
 
-                            <div class="palette-grid">
-                                <div class="p-2 d-flex">
-                                    <div class="palette-card card px-3 py-2 active">
-                                        <div class="color-item" v-for="i in 5">
-                                            <div class="color-marker" style="background-color: #ffffff"></div>
-                                            <div class="color-title">перламутровый ночной сини</div>
-                                        </div>
+                                <div class="colors d-flex flex-wrap">
+                                    <div class="color-item d-flex align-items-center flex-nowrap mr-3" v-for="color in i.colors"><span
+                                            class="badge badge-circle mr-2" :style="`background-color: ${color.hex}`">{{ color.name }}</span><span
+                                            class="font-size-lg ">{{ color.name }}</span></div>
 
-                                    </div>
-                                    <div class="palette-card card px-4 py-2" v-for="i in 6">
-                                        <div class="color-item" v-for="i in 4">
-                                            <div class="color-marker" style="background-color: #8c0615"></div>
-                                            <div class="color-title">перламутровый ночной сини</div>
-                                        </div>
-
-                                    </div>
                                 </div>
 
-
-                            </div>
-                            <div class="palette-nav-btn right">
-                                <i class="fa fa-angle-right"></i>
                             </div>
                         </div>
+
                     </div>
+                </div>
 
-                    <div class="divider my-5"></div>
+                <!--                <div class="scroll-container p-4">
 
-                    <div class="sixes-container">
-                        <div class="palette-title">Размеры</div>
+                                    <div class="color-container">
+                                        <div class="palette-title">Палитры</div>
+                                        <div class="palette-box d-flex position-relative mb-4 ">
+                                            <div class="palette-nav-btn left">
+                                                <i class="fa fa-angle-left"></i>
+                                            </div>
 
-                        <div class="sizes-grid">
+                                            <div class="palette-grid">
+                                                <div class="p-2 d-flex">
+                                                    <div class="palette-card card px-3 py-2 active">
+                                                        <div class="color-item" v-for="i in 5">
+                                                            <div class="color-marker" style="background-color: #ffffff"></div>
+                                                            <div class="color-title">перламутровый ночной сини</div>
+                                                        </div>
 
-                            <div class="size-item" v-for="i in 10">
-                                <div class="size-category">Женская одежда</div>
-                                <div class="size">42 (RUS44)</div>
-                            </div>
+                                                    </div>
+                                                    <div class="palette-card card px-4 py-2" v-for="i in 6">
+                                                        <div class="color-item" v-for="i in 4">
+                                                            <div class="color-marker" style="background-color: #8c0615"></div>
+                                                            <div class="color-title">перламутровый ночной сини</div>
+                                                        </div>
 
-                        </div>
-                    </div>
+                                                    </div>
+                                                </div>
 
-                </div>-->
+
+                                            </div>
+                                            <div class="palette-nav-btn right">
+                                                <i class="fa fa-angle-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="divider my-5"></div>
+
+                                    <div class="sixes-container">
+                                        <div class="palette-title">Размеры</div>
+
+                                        <div class="sizes-grid">
+
+                                            <div class="size-item" v-for="i in 10">
+                                                <div class="size-category">Женская одежда</div>
+                                                <div class="size">42 (RUS44)</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>-->
             </div>
 
         </div>
-
-
 
 
     </div>
@@ -93,24 +113,80 @@
 
 <script>
     export default {
-        data(){
+        data() {
             return {
                 isColor: false,
                 isSize: false,
-                category: null
+                category: null,
+                product: null
             }
         },
-        created(){
-            let product = this.$store.getters['dataset/product'](this.$route.params.product_id);
-            let category = this.$store.getters['dataset/categoryById'](product.category_id);
+        created() {
+            this.product = this.$store.getters['dataset/product'](this.$route.params.product_id);
+            let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
             this.isColor = !!category.is_select_color;
             this.isSize = !!category.is_select_size;
             this.category = category
         },
+        methods: {
+            selectArticle(i) {
+                this.$store.dispatch('selectedData/setArticles', i);
+                this.product = this.$store.getters['dataset/product'](this.$route.params.product_id);
+                let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
+                let isSize = !!category.is_select_size;
+                if(isSize){
+                    this.$store.dispatch('selectedData/setSizeCategory', this.product.category_size_id);
+                    this.$router.push('/get-products-process/' + this.$route.params.product_id + '/size')
+                }
+            },
+        }
     }
 </script>
 
 <style scoped lang="scss">
+
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-gap: 20px;
+        grid-auto-rows: 1fr;
+    }
+
+    .articles-item {
+        box-shadow: none;
+        border: 2px solid #d1d2db;
+
+
+        &:hover {
+            box-shadow: 0 0.46875rem 1.1875rem rgba(0, 0, 0, 0.03), 0 0.9375rem 1.40625rem rgba(0, 0, 0, 0.03), 0 0.25rem 0.53125rem rgba(0, 0, 0, 0.05), 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.03);
+        }
+
+        &.active {
+            border: 2px solid #3c44b1;
+            box-shadow: 0 0.46875rem 0.1875rem rgba(60, 68, 177, 0.1), 0 0.9375rem 1.40625rem rgba(60, 68, 177, 0.1);
+
+        }
+    }
+
+    .article-img {
+        border-radius: 4px;
+        overflow: hidden;
+        min-width: 90px;
+
+
+        img {
+            width: 90px;
+            min-width: 90px;
+            height: 110px;
+            object-fit: cover;
+        }
+    }
+
+    .badge-circle {
+        height: 16px;
+        width: 16px;
+    }
+
     .empty-screen {
         display: flex;
         flex-direction: column;
@@ -121,6 +197,7 @@
         .actions {
             .btn {
                 height: 72px;
+
                 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
                 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
                     line-height: 1;
@@ -361,6 +438,7 @@
             &:active {
                 background-color: rgba(60, 68, 177, 0.11);
             }
+
             &.active {
                 background-color: #3c44b1;
                 color: #ffffff;

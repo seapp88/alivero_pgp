@@ -1,18 +1,26 @@
 <template>
     <div class="app-header d-flex flex-row align-items-center justify-content-between px-3">
-        <div class="logo-wrapper d-flex flex-grow-1 align-items-center">
+        <div>
+            <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/')">
+                <i class="fa fa-th"></i>
+                Меню
+            </div>
+        </div>
+        <div class="logo-wrapper d-flex align-items-center">
             <div class="app-logo pl-1 pr-3">
                 <img src="@/assets/img/alivero-img/AWMS_logo.svg" alt="">
             </div>
             <div class="app-title text-white  mb-0 mt-2">Alivero WMS</div>
         </div>
+
         <div class="action-wrapper">
+
             <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/settings')">
                 <i class="fa fa-cog"></i>
                 Настройки
             </div>
             <div class="btn-header btn-logout pointer" @click="exitApp">
-                Закрыть приложение
+                Выйти
                 <i class="fa fa-sign-out-alt pl-2"></i>
             </div>
         </div>

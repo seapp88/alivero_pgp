@@ -16,15 +16,17 @@
 
                 <div class="product-card-body p-3">
                     <div class="product-img">
-                        <img src="@/assets/img/alivero-img/no_image.png" alt="">
+                        <img v-if="!product.photo && !$store.state.selectedData.articles" src="@/assets/img/alivero-img/no_image.png" alt="">
+                        <img v-if="product.photo && !$store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + product.photo" alt="">
+                        <img v-if="product.photo && $store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + $store.state.selectedData.articles.photo" alt="">
                     </div>
-                    <div class="product-title">{{ product.name }}</div>
-                    <div class="product-color" v-if="isColor">
-                        <div v-if="!$store.state.selectedData.colors.length">
-                            <div class="product-size mb-0 bg-danger">Цвета не выбраны!</div>
+                    <div class="product-title mb-4">{{ product.name }}</div>
+                    <div class="product-color">
+                        <div v-if="!$store.state.selectedData.articles">
+                            <div class="product-size mb-0 bg-danger">Артикул не выбран!</div>
                         </div>
-                        <div class="d-flex" v-else>
-                            <div class="color-marker" v-for="colorId in $store.state.selectedData.colors" :style="'background-color: ' + $store.getters['dataset/colorById'](colorId).hex"></div>
+                        <div v-else>
+                            <div class="product-size mb-0">{{ $store.state.selectedData.articles.barcode }}</div>
                         </div>
                     </div>
                     <div class="product-size"
@@ -35,13 +37,13 @@
                         $store.getters['dataset/sizeById']($store.state.selectedData.size).text
                         }}
                     </div>
-                    <div class="product-tags d-flex align-items-center justify-content-center" v-if="!$store.state.selectedData.tags.length">
-                        <div class="tag tag-none flex-grow-1 bg-neutral-second text-dark">Теги не выбраны</div>
-                    </div>
-                    <div class="product-tags d-flex align-items-center justify-content-center" v-else>
-                        <div class="tag flex-grow-1">{{ $store.getters['dataset/tagById']($store.state.selectedData.tags[0]).name }}</div>
-                        <div class="tag-count" v-if="$store.state.selectedData.tags.length > 1">+{{ $store.state.selectedData.tags.length - 1 }}</div>
-                    </div>
+<!--                    <div class="product-tags d-flex align-items-center justify-content-center" v-if="!$store.state.selectedData.tags.length">-->
+<!--                        <div class="tag tag-none flex-grow-1 bg-neutral-second text-dark">Теги не выбраны</div>-->
+<!--                    </div>-->
+<!--                    <div class="product-tags d-flex align-items-center justify-content-center" v-else>-->
+<!--                        <div class="tag flex-grow-1">{{ $store.getters['dataset/tagById']($store.state.selectedData.tags[0]).name }}</div>-->
+<!--                        <div class="tag-count" v-if="$store.state.selectedData.tags.length > 1">+{{ $store.state.selectedData.tags.length - 1 }}</div>-->
+<!--                    </div>-->
                 </div>
 
                 <div class="product-card-count py-3 px-4">
@@ -68,8 +70,8 @@
 <script>
     import MenuBar from './components/menu_bar/index'
 
-    const printer = require("@thiagoelg/node-printer");
-    // const printer = require("printer");
+    // const printer = require("@thiagoelg/node-printer");
+    const printer = require("printer");
 
     const zpl = require('../../../utils/zpl');
 
@@ -90,28 +92,20 @@
             this.product = this.$store.getters['dataset/product'](this.$route.params.product_id);
 
             let category = this.$store.getters['dataset/categoryById'](this.product.category_id);
-            this.isColor = !!category.is_select_color;
+            console.log(category)
             this.isSize = !!category.is_select_size;
             this.category = category
         },
         methods: {
             async acceptProduct(){
                 let data = {
-                    product_id: +this.$route.params.product_id,
-                    size_id: this.$store.state.selectedData.size,
-                    color_ids: this.$store.state.selectedData.colors,
-                    tag_ids: this.$store.state.selectedData.tags,
+                    article_id: +this.$store.state.selectedData.articles.id,
+                    size_id: this.isSize ? this.$store.state.selectedData.size : null,
                     count: +this.count,
                     stock_rack_cell_id: this.$store.state.dataset.stock_rack_cell_id
                 };
 
                 let valid = false;
-
-                if(this.isColor && !data.color_ids.length){
-                    alert('Выберите цвета')
-                }else {
-                    valid = true
-                }
 
                 if(this.isSize && !data.size_id){
                     alert('Выберите размер')
@@ -130,7 +124,7 @@
                     valid = false
                 }
 
-                if(!this.$store.state.dataset.stock_rack_cell_id){
+                if(!this.$store.state.dataset.printer){
                     alert('Перейдите в настройики и выберите принтер')
                     valid = false
                 }
@@ -139,15 +133,13 @@
                     try{
                         let res = await this.$http.post('/accept', data);
 
-                        this.$store.dispatch('dataset/addRecentProduct', this.product);
-
                         res.data.forEach(barcode => {
                             let tmpMain = zpl.tmpMain({
                                 name: this.product.name,
                                 brand: this.product.brand.name,
                                 model: this.product.model,
-                                color: '',
-                                size: '',
+                                color: this.$store.state.selectedData.articles.colors[0] ? this.$store.state.selectedData.articles.colors[0].name : 'Отсутствует',
+                                size: this.isSize ? this.$store.getters['dataset/sizeById'](this.$store.state.selectedData.size).text : 'Отсутствует',
                                 id: barcode
                             });
 
@@ -160,7 +152,8 @@
                                 }, error:function(err){console.log(err);}
                             });
                         });
-                        this.$router.push('/')
+                        this.$store.dispatch('dataset/addRecentProduct', this.product.id);
+                        this.$router.push('/get-products')
                     }catch (e) {
                         console.log(e)
                         alert('Не удалось принять товар проверьте подключение к интернету')
@@ -243,14 +236,14 @@
         .product-img {
             background: #ccc;
             overflow: hidden;
-            max-width: 150px;
-            width: 150px;
-            min-width: 150px;
-            height: 170px;
-            min-height: 170px;
-            max-height: 170px;
+            max-width: 180px;
+            width: 180px;
+            min-width: 180px;
+            height: 220px;
+            min-height: 220px;
+            max-height: 220px;
             border-radius: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
 
             img {
                 width: 100%;
@@ -260,7 +253,7 @@
         }
 
         .product-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             line-height: 30px;
             text-align: center;

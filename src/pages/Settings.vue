@@ -106,8 +106,8 @@
 
 <script>
 
-    const printer = require("@thiagoelg/node-printer");
-    // const printer = require("printer");
+    // const printer = require("@thiagoelg/node-printer");
+    const printer = require("printer");
 
     export default {
         data(){

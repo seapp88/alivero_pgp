@@ -2,30 +2,31 @@
     <div class="p-4">
         <div class="d-flex align-items-center justify-content-between  mb-3">
             <div class="step-title flex-grow-1 mb-0">Вы можете выбрать только 1 размер</div>
-            <div class="hint">Выбрано: Женская одежда 42 (RUS44)</div>
+            <div class="hint">Выбрано: {{ !$store.state.selectedData.size ?
+                'Размер не выбран!' :
+                $store.getters['dataset/sizeById']($store.state.selectedData.size).text
+                }}
+            </div>
 
         </div>
         <div class="card-chooser card">
-            <div class="size-category">
-                <div class="size-nav-btn">
-                    <i class="fa fa-angle-up"></i>
-                </div>
-                <div class="size-category-list">
-<!--                    <div class="size-category-item active">-->
-<!--                        Женская одежда-->
+<!--            <div class="size-category">-->
+<!--                <div class="size-nav-btn">-->
+<!--                    <i class="fa fa-angle-up"></i>-->
+<!--                </div>-->
+<!--                <div class="size-category-list">-->
+<!--                    <div class="size-category-item"-->
+<!--                         v-for="category in $store.state.dataset.categorySize"-->
+<!--                         :class="{active: category.id === $store.state.selectedData.sizeCategory}"-->
+<!--                         @click="$store.dispatch('selectedData/setSizeCategory', category.id)">-->
+<!--                        {{ category.name }}-->
 <!--                    </div>-->
-                    <div class="size-category-item"
-                         v-for="category in $store.state.dataset.categorySize"
-                         :class="{active: category.id === $store.state.selectedData.sizeCategory}"
-                         @click="$store.dispatch('selectedData/setSizeCategory', category.id)">
-                        {{ category.name }}
-                    </div>
-                </div>
+<!--                </div>-->
 
-                <div class="size-nav-btn">
-                    <i class="fa fa-angle-down"></i>
-                </div>
-            </div>
+<!--                <div class="size-nav-btn">-->
+<!--                    <i class="fa fa-angle-down"></i>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="size-grid-container p-4" v-if="$store.state.selectedData.sizeCategory">
                 <div class="size-grid">
@@ -36,8 +37,22 @@
                         {{ size.name }} (RU {{ size.ru }})
                     </div>
                 </div>
+            </div>
 
+            <div class="empty-screen" v-else>
+                <div class="empty-screen-message">
+                    <div class="img">
+                        <img src="@/assets/img/alivero-img/accept_empty.svg" alt="">
+                    </div>
+                    <div class="title">
+                        Выберите артикул товара
 
+                    </div>
+                    <div class="message">
+                        Чтобы принять товар, необходимо выбрать артикул товара и его размер.
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -133,6 +148,41 @@
 
 
 
+    }
+
+    .empty-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        /*height: calc(100vh - 450px);*/
+
+        .empty-screen-message {
+            border-radius: 6px;
+            text-align: center;
+
+            .img {
+                height: 360px;
+                margin-bottom: 30px;
+
+                img {
+                    height: 100%;
+                }
+
+            }
+
+            .title {
+                font-weight: 600;
+                font-size: 26px;
+                margin-bottom: 5px;
+            }
+
+            .message {
+                font-size: 18px;
+                width: 600px;
+            }
+        }
     }
 
     .size-nav-btn {

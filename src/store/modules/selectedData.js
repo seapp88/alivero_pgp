@@ -2,6 +2,7 @@ export default {
     namespaced: true,
     state: {
         colors: [],
+        articles: null,
         sizeCategory: null,
         size: null,
         tags: []
@@ -19,7 +20,12 @@ export default {
             state.colors = [];
             state.sizeCategory = null;
             state.size = null;
+            state.articles = null,
             state.tags = [];
+        },
+        setArticles(state, data){
+            state.articles = data
+            console.log(data)
         },
         setColor(state, color_id){
             if(!state.colors.includes(color_id)){
@@ -56,6 +62,9 @@ export default {
         },
         setStateConnect({commit}, val){
             commit('setStateConnect', val);
+        },
+        setArticles({commit}, data){
+            commit('setArticles', data)
         },
         setColor({commit}, color_id){
             commit('setColor', color_id)

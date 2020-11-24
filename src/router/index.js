@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/', redirect: '/get-products' },
     {
         path: '/',
         component: require('../layout/Main').default,
@@ -60,6 +59,10 @@ const routes = [
                         component: require('../pages/get_products_process/Tag').default,
                     }
                 ]
+            },
+            {
+                path: '/stock-print',
+                component: require('../pages/stock_print').default,
             }
         ]
     },

@@ -17,8 +17,8 @@ import NumPad from './components/numpad'
 Vue.component('keyboard', Keyboard);
 Vue.component('num-pad', NumPad);
 
-// const BASE_URL = 'http://10.10.10.10:3000';
-const BASE_URL = 'https://wms.alivero.ru';
+const BASE_URL = 'http://10.10.10.10:3000';
+// const BASE_URL = 'https://wms.alivero.ru';
 
 import axios from 'axios'
 const instance = axios.create({
