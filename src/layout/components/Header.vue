@@ -1,19 +1,19 @@
 <template>
     <div class="app-header d-flex flex-row align-items-center justify-content-between px-3">
-        <div>
+        <div class="w-25">
             <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/')">
                 <i class="fa fa-th"></i>
-                Меню
+                Главное меню
             </div>
         </div>
-        <div class="logo-wrapper d-flex align-items-center">
+        <div class="logo-wrapper d-flex align-items-center justify-content-center flex-grow-1">
             <div class="app-logo pl-1 pr-3">
                 <img src="@/assets/img/alivero-img/AWMS_logo.svg" alt="">
             </div>
             <div class="app-title text-white  mb-0 mt-2">Alivero WMS</div>
         </div>
 
-        <div class="action-wrapper">
+        <div class="action-wrapper w-25 justify-content-end">
 
 <!--            <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/settings')">-->
 <!--                <i class="fa fa-cog"></i>-->
@@ -77,6 +77,7 @@
         line-height: 48px;
         height: 48px;
         padding: 0 24px;
+        width: fit-content;
 
         &.btn-logout {
             background-color: rgba(243, 23, 54, 0.3);

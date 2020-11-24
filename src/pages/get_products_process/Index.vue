@@ -1,6 +1,30 @@
 <template>
     <div class="p-4 d-flex flex-column">
-        <div class="step-title mb-3">{{ product ? product.title : 'Выберите артикул' }}</div>
+        <div class="d-flex mb-3 align-items-center">
+            <div class="w-25">
+                <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/get-products/' + product.company_id + '/category/' + product.category)">
+                    <i class="fa fa-arrow-left"></i>
+                    Назад
+                </div>
+            </div>
+            <div class="step-title flex-grow-1 text-center mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">
+                {{ product ? product.title : 'Выберите артикул' }}
+            </div>
+            <div class="page-search w-25">
+                <!--                <div class="form-group mb-0">-->
+                <!--                    <div class="input-group input-group-lg input-group-seamless">-->
+                <!--                        <div class="input-group-prepend">-->
+                <!--                            <span class="input-group-text"><i class="fas fa-search"></i></span>-->
+                <!--                        </div>-->
+                <!--                        <input class="form-control" placeholder="Поиск по странице" type="text">-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+            </div>
+        </div>
+
+
+
         <div class="card overflow-hidden shadow-none border-0">
             <div class="card-chooser card">
 
@@ -25,31 +49,37 @@
                 <div class="scroll-container p-4" v-else>
                     <div class="articles-grid">
 
-                        <div v-for="i in product.articles" class="articles-item card card-body d-flex flex-row align-items-center" :class="{active: $store.state.selectedData.articles && i.id === $store.state.selectedData.articles.id}"
+                        <div v-for="i in product.articles" class="articles-item card p-2 d-flex flex-row " :class="{active: $store.state.selectedData.articles && i.id === $store.state.selectedData.articles.id}"
                              @click="selectArticle(i)">
-                            <div class="article-img mr-4">
+                            <div class="article-img mr-3">
                                 <img v-if="!i.photo" height="50" src="@/assets/img/alivero-img/no_image.png"
                                      alt="">
                                 <img v-else height="50"
                                      :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + i.photo"
                                      alt="">
                             </div>
-                            <div class="article-info flex-grow-1">
-                                <h3 class="text-black font-weight-bold mb-3">{{ i.vendor_code }}</h3>
-                                <div class="divider bg-neutral-second mb-3"></div>
-
-                                <div class="colors d-flex flex-wrap">
+                            <div class="article-info flex-grow-1 pl-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">
+                                <h4 class="text-black font-weight-bold mb-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; " >{{ i.vendor_code }}</h4>
+                                <div class="colors d-flex flex-wrap text-second px-3 py-1 bg-neutral-second font-size-md">
                                     {{ i.color }}
 
-                                    <div v-for="sku in i.skus">
-                                        {{ sku.size }}
-                                    </div>
 
-<!--                                    <div class="color-item d-flex align-items-center flex-nowrap mr-3" v-for="color in i.colors"><span-->
-<!--                                            class="badge badge-circle mr-2" :style="`background-color: ${color.hex}`">{{ color.name }}</span><span-->
-<!--                                            class="font-size-lg ">{{ $store.state.selectedData.articles.color }}</span></div>-->
+
+                                    <!--                                    <div class="color-item d-flex align-items-center flex-nowrap mr-3" v-for="color in i.colors"><span-->
+                                    <!--                                            class="badge badge-circle mr-2" :style="`background-color: ${color.hex}`">{{ color.name }}</span><span-->
+                                    <!--                                            class="font-size-lg ">{{ $store.state.selectedData.articles.color }}</span></div>-->
 
                                 </div>
+                                <div class="divider bg-neutral-second my-3"></div>
+
+
+                                <div class="size-container">
+<!--                                    добавить active-->
+                                    <div class="size-item text-primary font-weight-bold border border-primary rounded active" v-for="sku in i.skus">
+                                        {{ sku.size }}
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
@@ -161,6 +191,41 @@
         box-shadow: none;
         border: 2px solid #d1d2db;
 
+        .article-info {
+            padding-top: 12px;
+
+            .colors {
+                width: fit-content;
+                border-radius: 50px;
+            }
+
+            .size-container {
+                display: flex;
+                flex-wrap: wrap;
+
+                .size-item {
+                    padding: 14px 24px;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+
+                    &:active {
+                        background-color: rgba(54, 62, 133, 0.11);
+
+                    }
+
+                    &.active {
+                        background-color: #3C44B1;
+                        color: white!important;
+                    }
+                }
+
+
+
+
+            }
+
+        }
+
 
         &:hover {
             box-shadow: 0 0.46875rem 1.1875rem rgba(0, 0, 0, 0.03), 0 0.9375rem 1.40625rem rgba(0, 0, 0, 0.03), 0 0.25rem 0.53125rem rgba(0, 0, 0, 0.05), 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.03);
@@ -176,13 +241,12 @@
     .article-img {
         border-radius: 4px;
         overflow: hidden;
-        min-width: 90px;
+        min-width: 140px;
 
 
         img {
-            width: 90px;
-            min-width: 90px;
-            height: 110px;
+            width: 140px;
+            height: 180px;
             object-fit: cover;
         }
     }
@@ -282,7 +346,7 @@
         width: 20px;
         flex: 1;
         overflow-y: auto;
-        height: calc(100vh - 215px);
+        height: calc(100vh - 227px);
     }
 
 
@@ -452,6 +516,28 @@
             }
         }
 
+
+    }
+
+    .btn-header {
+        display: flex;
+        align-items: center;
+        border-radius: 6px;
+        font-weight: 600;
+        line-height: 48px;
+        height: 48px;
+        padding: 0 24px;
+        width: fit-content;
+
+        &.btn-settings {
+            color: rgba(53, 55, 90, 0.8);
+            border: 2px solid rgba(53, 55, 90, 0.51);
+
+            i {
+                font-size: 18px;
+                padding-right: 10px;
+            }
+        }
 
     }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="page-container">
-        <menu-bar></menu-bar>
+<!--        <menu-bar></menu-bar>-->
 
         <div class="content-wrapper">
             <router-view :key="$route.fullPath"></router-view>
@@ -15,20 +15,20 @@
                 </div>
 
                 <div class="product-card-body p-3">
-                    <div class="product-img">
+                    <div class="product-img mt-3">
                         <img v-if="!product.photo && !$store.state.selectedData.articles" src="@/assets/img/alivero-img/no_image.png" alt="">
                         <img v-if="product.photo && !$store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + product.photo" alt="">
                         <img v-if="product.photo && $store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + $store.state.selectedData.articles.photo" alt="">
                     </div>
-                    <div class="product-title mb-4">{{ $store.state.selectedData.articles ? $store.state.selectedData.articles.vendor_code : 'Товар не выбран' }}</div>
-                    <div class="product-color">
-                        <div v-if="!$store.state.selectedData.articles">
-                            <div class="product-size mb-0 bg-danger">Артикул не выбран!</div>
-                        </div>
-                        <div v-else>
-                            <div class="product-size mb-0">{{ $store.state.selectedData.articles.vendor_code }}</div>
-                        </div>
-                    </div>
+                    <div class="product-title mb-4">{{ $store.state.selectedData.articles ? $store.state.selectedData.articles.vendor_code : 'Артикул не выбран' }}</div>
+<!--                    <div class="product-color">-->
+<!--                        <div v-if="!$store.state.selectedData.articles">-->
+<!--                            <div class="product-size mb-0 bg-danger">Артикул не выбран!</div>-->
+<!--                        </div>-->
+<!--                        <div v-else>-->
+<!--                            <div class="product-size mb-0">{{ $store.state.selectedData.articles.vendor_code }}</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="product-size"
                          v-if="isSize"
                          :class="{'bg-danger': !$store.state.selectedData.size}">
@@ -236,14 +236,14 @@
         .product-img {
             background: #ccc;
             overflow: hidden;
-            max-width: 180px;
-            width: 180px;
-            min-width: 180px;
-            height: 220px;
-            min-height: 220px;
-            max-height: 220px;
+            max-width: 200px;
+            width: 200px;
+            min-width: 200px;
+            height: 240px;
+            min-height: 240px;
+            max-height: 240px;
             border-radius: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 36px;
 
             img {
                 width: 100%;
