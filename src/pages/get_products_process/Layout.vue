@@ -20,7 +20,7 @@
                         <img v-if="product.photo && !$store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + product.photo" alt="">
                         <img v-if="product.photo && $store.state.selectedData.articles" :src="$http.defaults.baseURL.replace('api/v1/pgp', '') + $store.state.selectedData.articles.photo" alt="">
                     </div>
-                    <div class="product-title mb-4">{{ $store.state.selectedData.articles.vendor_code }}</div>
+                    <div class="product-title mb-4">{{ $store.state.selectedData.articles ? $store.state.selectedData.articles.vendor_code : 'Товар не выбран' }}</div>
                     <div class="product-color">
                         <div v-if="!$store.state.selectedData.articles">
                             <div class="product-size mb-0 bg-danger">Артикул не выбран!</div>
