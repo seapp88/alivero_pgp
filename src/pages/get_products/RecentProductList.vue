@@ -99,6 +99,8 @@
                 </div>
             </div>
 
+            <div class="catalog-btn bg-primary px-3 py-4 w-100 text-white text-center font-weight-bold font-size-xl rounded mt-3">Перейти в каталог<i class="fa fa-arrow-right pl-3"></i></div>
+
 
         </div>
 
@@ -145,6 +147,10 @@
 </script>
 
 <style scoped lang="scss">
+
+    .catalog-btn:active {
+        background-color: #363e85!important;
+    }
 
     .search-hint {
         font-size: 16px;
@@ -203,14 +209,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: calc(100vh - 450px);
+        height: calc(100vh - 549px);
 
         .empty-screen-message {
             border-radius: 6px;
             text-align: center;
 
             .img {
-                height: 360px;
+                height: 300px;
                 margin-bottom: 30px;
 
                 img {

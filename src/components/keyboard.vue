@@ -182,7 +182,7 @@
 <style  lang="scss">
     .ui-keyboard {
         position: fixed;
-        width: calc(100% - 214px);
+        width: calc(100% - 33px);
         bottom: 36px;
         background-color: #070919;
         display: flex;

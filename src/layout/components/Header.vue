@@ -15,10 +15,10 @@
 
         <div class="action-wrapper">
 
-            <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/settings')">
-                <i class="fa fa-cog"></i>
-                Настройки
-            </div>
+<!--            <div class="btn-header btn-settings mr-3 pointer" @click="$router.push('/settings')">-->
+<!--                <i class="fa fa-cog"></i>-->
+<!--                Настройки-->
+<!--            </div>-->
             <div class="btn-header btn-logout pointer" @click="exitApp">
                 Выйти
                 <i class="fa fa-sign-out-alt pl-2"></i>

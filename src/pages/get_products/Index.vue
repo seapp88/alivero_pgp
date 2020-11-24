@@ -1,6 +1,6 @@
 <template>
     <div class="page-container">
-        <menu-bar></menu-bar>
+<!--        <menu-bar></menu-bar>-->
 
         <div class="content-wrapper">
             <router-view :key="$route.fullPath"></router-view>
